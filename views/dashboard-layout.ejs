@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hockey Training AI Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+
+  <body class="dashboard-background">
+    <div class="container">
+      <div class="dash-top-nav">
+        <a href="/" class="logo">HockeyTrainingAI</a>
+        <div class="wrapper">
+          <p id="curr-user"></p>
+          <a href="/dashboard/profile"><i class="fa-solid fa-user"></i></a>
+        </div>
+      </div>
+      <div class="dasboard-row">
+        <h2 id="dash-user" class="h1-dashboard"></h2>
+      </div>
+      <%- include('partials/dashboard-nav') %>
+    </div>
+
+    <%- include(page) %>
+
+    <script type="module" src="/js/dashboard.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script type="module" src="/js/swiper.js"></script>
+  </body>
+</html>

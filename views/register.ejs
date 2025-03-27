@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/forms.css" />
+    <title>Hockey Training AI</title>
+  </head>
+  <body>
+    <div class="form-background">
+      <div class="left-side">
+        <h1>HockeyTrainingAI</h1>
+        <button id="reg-login-btn">Login</button>
+      </div>
+      <div class="right-side">
+        <form class="register-form" id="register-form">
+          <h2>Create New Account</h2>
+          <div class="names-container">
+            <div class="input-box">
+              <label for="firstName">First Name</label>
+              <input type="text" name="firstName" id="first-name" />
+              <p class="error-text" id="first-name-err"></p>
+            </div>
+
+            <div class="input-box">
+              <label for="lastName">Last Name</label>
+              <input type="text" name="lastName" id="last-name" />
+              <p class="error-text" id="last-name-err"></p>
+            </div>
+          </div>
+          <div class="input-box">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="reg-email" />
+            <p class="error-text" id="email-err"></p>
+          </div>
+
+          <div class="input-box">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="reg-password" />
+            <p class="error-text" id="password-err"></p>
+          </div>
+          <div class="input-box">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              id="reg-confirm-password" />
+            <p class="error-text" id="confirm-pass-err"></p>
+          </div>
+
+          <button id="register-btn">Register</button>
+          <a href="/login" class="new-account-link"
+            >Already have an account? Login
+          </a>
+        </form>
+      </div>
+    </div>
+    <script src="/js/register.js"></script>
+  </body>
+</html>

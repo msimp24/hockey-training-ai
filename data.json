@@ -1,0 +1,323 @@
+[
+  {
+    "phase_focus": "Strength",
+    "phase_number": 1,
+    "weekly_schedule": [
+      {
+        "day": 1,
+        "focus": "Lower Body Strength",
+        "warmup": [
+          "5 mins bike",
+          "Dynamic lunges, 2x10/leg",
+          "Hip flexor stretch, 2x30s/leg",
+          "Single-leg balance with reach, 2x8/leg"
+        ],
+        "main_workout": [
+          "Back Squat, 5x5 @ 80-85% 1RM",
+          "Romanian Deadlift, 4x6",
+          "Bulgarian Split Squat, 4x8/leg",
+          "Walking Lunges, 3x12",
+          "Calf Raises, 4x15",
+          "Nordic Hamstring Curls, 3x6"
+        ],
+        "cool_down": [
+          "Foam rolling for 10 mins",
+          "Hip flexor stretch, 2x30s/leg",
+          "Hamstring stretch, 2x30s/leg"
+        ]
+      },
+      {
+        "day": 2,
+        "focus": "Upper Body Strength",
+        "warmup": [
+          "5 mins rowing machine",
+          "Arm Circles, 2x15 each direction",
+          "Shoulder Dislocations, 2x15",
+          "Push-up variations, 2x10"
+        ],
+        "main_workout": [
+          "Bench Press, 5x5 @ 80-85% 1RM",
+          "Pull-ups, 4x6",
+          "Bent Over Rows, 4x8",
+          "Shoulder Press, 3x10",
+          "Tricep Dips, 3x12",
+          "Bicep Curls, 3x12"
+        ],
+        "cool_down": [
+          "Foam rolling for 10 mins",
+          "Shoulder stretch, 2x30s/arm",
+          "Tricep stretch, 2x30s/arm"
+        ]
+      },
+      {
+        "day": 3,
+        "focus": "Full Body Strength",
+        "warmup": [
+          "5 mins jump rope",
+          "Bodyweight Squats, 2x15",
+          "Plank variations, 2x30s",
+          "Glute Bridges, 2x15"
+        ],
+        "main_workout": [
+          "Deadlift, 5x5 @ 80-85% 1RM",
+          "Front Squat, 4x6",
+          "Chin-ups, 4x8",
+          "Russian Twists, 3x12/side",
+          "Hanging Leg Raises, 3x12",
+          "Farmers Walk, 3x30s"
+        ],
+        "cool_down": [
+          "Foam rolling for 10 mins",
+          "Quad stretch, 2x30s/leg",
+          "Lower Back stretch, 2x30s"
+        ]
+      },
+      {
+        "day": 4,
+        "focus": "Core Strength",
+        "warmup": [
+          "5 mins treadmill",
+          "Plank variations, 2x30s",
+          "Russian Twists, 2x15/side",
+          "Leg Raises, 2x15"
+        ],
+        "main_workout": [
+          "Hanging Leg Raises, 4x10",
+          "Woodchoppers, 3x12/side",
+          "Plank with Row, 3x10/side",
+          "Medicine Ball Slams, 3x15",
+          "Cable Crunches, 3x15",
+          "Oblique Crunches, 3x15/side"
+        ],
+        "cool_down": [
+          "Foam rolling for 10 mins",
+          "Abdominal stretch, 2x30s",
+          "Lower Back stretch, 2x30s"
+        ]
+      },
+      {
+        "day": 5,
+        "focus": "Recovery & Mobility",
+        "activities": [
+          "Foam rolling full body",
+          "Static stretching for major muscle groups",
+          "Light cardio or yoga for relaxation"
+        ]
+      }
+    ]
+  },
+  {
+    "phase_focus": "Power & Strength",
+    "phase_number": 2,
+    "weekly_schedule": [
+      {
+        "day": 1,
+        "focus": "Explosive Lower Body",
+        "warmup": [
+          "5 mins bike",
+          "Leg Swings, 2x15/leg",
+          "Box Jumps, 3x5",
+          "Lateral Lunges, 2x10/side"
+        ],
+        "main_workout": [
+          "Power Cleans, 5x3 @ 75-80% 1RM",
+          "Box Squats, 4x6",
+          "Jump Squats, 3x8",
+          "Single-Leg Box Step-Ups, 3x10/leg",
+          "Russian Twists with Medicine Ball, 3x15/side",
+          "Sled Pushes, 4x20m"
+        ],
+        "cool_down": [
+          "Foam rolling for 10 mins",
+          "Quad stretch, 2x30s/leg",
+          "Hip Flexor stretch, 2x30s/leg"
+        ]
+      },
+      {
+        "day": 2,
+        "focus": "Explosive Upper Body",
+        "warmup": [
+          "5 mins rowing machine",
+          "Arm Swings, 2x15 each direction",
+          "Medicine Ball Throws, 3x8",
+          "Band Pull-aparts, 2x15"
+        ],
+        "main_workout": [
+          "Hang Power Snatch, 5x3 @ 75-80% 1RM",
+          "Push Press, 4x6",
+          "Medicine Ball Slams, 3x12",
+          "Plyometric Push-ups, 3x8",
+          "Battle Rope Waves, 3x20s",
+          "Pull-ups with Explosive Pull, 4x6"
+        ],
+        "cool_down": [
+          "Foam rolling for 10 mins",
+          "Shoulder stretch, 2x30s/arm",
+          "Tricep stretch, 2x30s/arm"
+        ]
+      },
+      {
+        "day": 3,
+        "focus": "Full Body Power",
+        "warmup": [
+          "5 mins jump rope",
+          "Bodyweight Squat Jumps, 2x10",
+          "Mountain Climbers, 2x30s",
+          "Dynamic Planks, 2x15"
+        ],
+        "main_workout": [
+          "Power Snatch, 5x3 @ 75-80% 1RM",
+          "Kettlebell Swings, 4x12",
+          "Plyo Lunges, 3x12/leg",
+          "Burpees, 3x10",
+          "Medicine Ball Rotational Throws, 3x12/side",
+          "Sprint Intervals, 8x100m"
+        ],
+        "cool_down": [
+          "Foam rolling for 10 mins",
+          "Hamstring stretch, 2x30s/leg",
+          "Lower Back stretch, 2x30s"
+        ]
+      },
+      {
+        "day": 4,
+        "focus": "Core Power",
+        "warmup": [
+          "5 mins treadmill",
+          "Medicine Ball Rotational Throws, 2x10/side",
+          "Hollow Body Holds, 2x30s",
+          "Plank with Leg Lift, 2x15/side"
+        ],
+        "main_workout": [
+          "Medicine Ball Slams, 4x12",
+          "Russian Twists with Medicine Ball, 3x15/side",
+          "Hanging Leg Raises, 3x10",
+          "Plank with Row, 3x10/side",
+          "Cable Woodchoppers, 3x12/side",
+          "Sledgehammer Slams, 3x15/side"
+        ],
+        "cool_down": [
+          "Foam rolling for 10 mins",
+          "Abdominal stretch, 2x30s",
+          "Lower Back stretch, 2x30s"
+        ]
+      },
+      {
+        "day": 5,
+        "focus": "Recovery & Mobility",
+        "activities": [
+          "Foam rolling full body",
+          "Static stretching for major muscle groups",
+          "Light cardio or yoga for relaxation"
+        ]
+      }
+    ]
+  },
+  {
+    "phase_focus": "Speed, Power & Cardio",
+    "phase_number": 3,
+    "weekly_schedule": [
+      {
+        "day": 1,
+        "focus": "Speed & Agility",
+        "warmup": [
+          "5 mins bike",
+          "High Knees, 2x20m",
+          "Ladder Drills, 2x10 sets",
+          "Carioca, 2x20m"
+        ],
+        "main_workout": [
+          "Sprints, 10x40m",
+          "Agility Cone Drills, 4x5 sets",
+          "Plyo Push-ups, 3x10",
+          "Bounding Jumps, 3x8",
+          "Speed Skaters, 3x12/side",
+          "Jump Rope, 3x2 mins"
+        ],
+        "cool_down": [
+          "Foam rolling for 10 mins",
+          "Quad stretch, 2x30s/leg",
+          "Hip Flexor stretch, 2x30s/leg"
+        ]
+      },
+      {
+        "day": 2,
+        "focus": "Power & Endurance",
+        "warmup": [
+          "5 mins rowing machine",
+          "Box Jumps, 3x5",
+          "Medicine Ball Slams, 2x12",
+          "Jump Squats, 3x8"
+        ],
+        "main_workout": [
+          "Clean and Jerk, 5x3 @ 75-80% 1RM",
+          "Kettlebell Swings, 4x15",
+          "Battle Rope Waves, 3x30s",
+          "Box Step-Ups with Knee Drive, 3x12/leg",
+          "Burpees, 3x15",
+          "Rowing Intervals, 5x500m"
+        ],
+        "cool_down": [
+          "Foam rolling for 10 mins",
+          "Shoulder stretch, 2x30s/arm",
+          "Hamstring stretch, 2x30s/leg"
+        ]
+      },
+      {
+        "day": 3,
+        "focus": "Cardio & Conditioning",
+        "warmup": [
+          "5 mins jump rope",
+          "Mountain Climbers, 2x30s",
+          "Plank with Leg Lift, 2x15/side",
+          "Jumping Jacks, 2x1 min"
+        ],
+        "main_workout": [
+          "Interval Sprints, 10x100m",
+          "Box Jumps, 4x8",
+          "Battle Rope Slams, 3x20s",
+          "Russian Twists, 3x20/side",
+          "Jump Squats, 3x12",
+          "Cycling Intervals, 5x2 mins"
+        ],
+        "cool_down": [
+          "Foam rolling for 10 mins",
+          "Hip Flexor stretch, 2x30s/leg",
+          "Quad stretch, 2x30s/leg"
+        ]
+      },
+      {
+        "day": 4,
+        "focus": "Metabolic Conditioning",
+        "warmup": [
+          "5 mins treadmill",
+          "Medicine Ball Slams, 2x15",
+          "Hollow Body Holds, 2x30s",
+          "Burpees, 2x15"
+        ],
+        "main_workout": [
+          "AMRAP in 15 mins: 10 Kettlebell Swings, 10 Box Jumps, 10 Push-ups",
+          "Rowing Intervals, 5x500m",
+          "Battle Rope Circles, 3x20s each direction",
+          "Med Ball Russian Twists, 3x20/side",
+          "Sled Pushes, 4x20m",
+          "Jump Rope, 3x2 mins"
+        ],
+        "cool_down": [
+          "Foam rolling for 10 mins",
+          "Lower Back stretch, 2x30s",
+          "Hamstring stretch, 2x30s/leg"
+        ]
+      },
+      {
+        "day": 5,
+        "focus": "Recovery & Mobility",
+        "activities": [
+          "Foam rolling full body",
+          "Static stretching for major muscle groups",
+          "Light cardio or yoga for relaxation"
+        ]
+      }
+    ]
+  }
+]

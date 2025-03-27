@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+* {
+  font-family: 'Noto Serif', serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: 'wdth' 100;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+:root {
+  /* Primary Colors */
+  --primary-dark: #141e30; /* Dark background */
+  --primary-light: #fff; /* Light foreground (text, buttons, etc.) */
+
+  /* Accent Colors */
+  --accent-color: #1abc9c; /* Teal accent color */
+  --accent-light: #16a085; /* Lighter teal for hover effect */
+  --neutral-light: #f5f5f5; /* Light neutral background color */
+  --neutral-dark: #333333; /* Dark neutral color for text or footer background */
+
+  /* Button Styling */
+  --btn-bg-color: var(--accent-color); /* Button background color */
+  --btn-text-color: var(--primary-light); /* Button text color */
+  --btn-border-radius: 15px; /* Button border radius */
+  --btn-padding: 12px 25px; /* Button padding */
+  --btn-font-size: 1.1rem; /* Button font size */
+  --btn-font-weight: bold; /* Button font weight */
+  --btn-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Button shadow */
+  --btn-hover-bg-color: var(--accent-light); /* Button hover background color */
+  --btn-hover-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* Button hover shadow */
+  /* General UI Colors */
+  --background-color: var(--primary-dark); /* General background color */
+  --text-color: var(--primary-light); /* Text color */
+  --link-color: var(--accent-color); /* Default link color */
+  --link-hover-color: var(--accent-light); /* Hover color for links */
+
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+
+  --font-size-xxs: 0.75rem;
+  --font-size-xs: 0.875rem;
+  --font-size-sm: 1.25rem;
+  --font-size-md: 1.5rem;
+  --font-size-lg: 2rem;
+  --font-size-xl: 3rem;
+}
+
+body {
+  animation: fadeInAnimation ease 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.form-background {
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(#141e30, #243b55);
+  display: flex;
+}
+.form-background h1 {
+  color: var(--primary-light);
+  font-size: var(--font-size-xl);
+}
+
+.layout {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 70px;
+}
+.left-side {
+  background: var(--primary-light);
+  width: 40%;
+  height: 100vh;
+  border-bottom-right-radius: 25%;
+  border-top-right-radius: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.left-side h1 {
+  font-size: var(--font-size-lg);
+  color: var(--primary-dark);
+}
+.right-side {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+}
+
+button {
+  background-color: var(--btn-bg-color);
+  color: var(--btn-text-color);
+  padding: var(--btn-padding);
+  border-radius: var(--btn-border-radius);
+  font-size: var(--btn-font-size);
+  font-weight: var(--btn-font-weight);
+  border: none;
+  box-shadow: var(--btn-shadow);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--btn-hover-bg-color);
+  box-shadow: var(--btn-hover-shadow);
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none;
+  border: var(--btn-focus-border);
+}
+
+.register-form {
+  box-shadow: var(--btn-shadow);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: var(--btn-border-radius);
+  width: 80%;
+  max-width: 600px;
+  gap: 15px;
+}
+.register-form h2 {
+  font-size: var(--font-size-lg);
+  margin: 20px 0;
+  color: var(--primary-light);
+}
+.register-form input {
+  border-radius: 8px;
+  padding: 4px 8px;
+  width: 100%;
+  font-size: var(--font-size-sm);
+}
+.names-container input {
+  width: 100%;
+}
+
+.names-container {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: space-around;
+}
+.input-box label {
+  font-size: var(--font-size-sm);
+  color: var(--primary-light);
+}
+.input-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 5px;
+}
+
+.error-text {
+  color: red;
+  font-size: var(--font-size-xxs);
+}
+
+.login-form h2 {
+  font-size: var(--font-size-lg);
+  margin: 20px 0;
+  color: var(--primary-dark);
+}
+.login-form input {
+  border-radius: 8px;
+  padding: 4px 8px;
+  width: 100%;
+  font-size: var(--font-size-sm);
+}
+
+.login-input-box label {
+  font-size: var(--font-size-sm);
+  color: var(--primary-light);
+  width: 100%;
+}
+
+.new-account-link {
+  color: var(--primary-light);
+}
+
+@media (width < 900px) {
+  .left-side {
+    display: none;
+  }
+  .right-side {
+    width: 100%;
+  }
+}

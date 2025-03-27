@@ -1,0 +1,14 @@
+Payment structure
+- Free trial allows 2 free workout prompts
+- Monthly Plan starting at 
+
+Dashboard Nav
+- Current Program
+- List of past programs
+- Click for form to create new program
+- How to Video
+- Profile Info
+- Puck Handling Drills
+
+
+TODO:
