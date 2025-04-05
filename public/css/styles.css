@@ -183,7 +183,6 @@ button:focus {
   text-align: center;
   color: var(--primary-light);
   font-size: var(--font-size-xl);
-  margin: 20px 0;
 }
 .h2-dashboard {
   text-align: center;
@@ -234,7 +233,8 @@ button:focus {
 }
 
 .dashboard-nav li:active {
-  background-color: var(--primary-light);
+  text-decoration: underline;
+  text-underline-offset: 0.5em;
 }
 
 .dash-logout-btn {
@@ -250,6 +250,7 @@ button:focus {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  display: none;
 }
 
 .phase-container h2 {
@@ -405,16 +406,63 @@ button:focus {
 .prompt-form {
   box-shadow: var(--btn-shadow);
   background-color: var(--primary-light);
-  padding: 50px;
+  height: auto;
+  max-height: 90vh;
+  padding: 5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: var(--btn-border-radius);
-  width: 80%;
+  width: 100%;
   max-width: 700px;
-  gap: 20px;
+  gap: 10px;
   border-top: 6px solid var(--accent-color);
+  position: relative;
+  overflow-y: scroll;
 }
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+.close-modal-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--accent-color);
+  border: none;
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  color: var(--primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: var(--btn-shadow);
+  transition: all 0.3s ease-in-out;
+}
+.close-modal-btn:hover {
+  background-color: var(--btn-hover-bg-color);
+  box-shadow: var(--btn-hover-shadow);
+  cursor: pointer;
+}
+
+.close-modal-btn:focus {
+  outline: none;
+  border: var(--btn-focus-border);
+}
+
 .prompt-form h2 {
   color: var(--primary-dark);
 }
@@ -512,6 +560,8 @@ button:focus {
   justify-content: space-between;
   align-items: center;
   gap: 20px;
+}
+#workout-wrapper {
 }
 
 /* all workouts styles */
@@ -669,6 +719,94 @@ button:focus {
   font-size: var(--font-size-md);
 }
 
+.table-container {
+  width: 100%;
+  max-height: 800px;
+  overflow-x: auto;
+  border-radius: var(--btn-border-radius);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background-color: var(--neutral-light);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--neutral-dark);
+}
+th,
+td {
+  padding: var(--spacing-md);
+  text-align: left;
+  border-bottom: 2px solid var(--primary-light);
+  border-right: 2px solid var(--primary-light);
+}
+tr,
+td {
+  font-size: var(--font-size-xs);
+}
+th:last-child,
+td:last-child {
+  border-right: none;
+}
+th {
+  background-color: var(--accent-color);
+  color: var(--primary-light);
+  font-size: var(--font-size-md);
+  position: sticky;
+  top: 0;
+}
+
+.create-workout-modal {
+  display: none; /* Hidden by default */
+}
+.token-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.purchase-tokens-modal {
+  box-shadow: var(--btn-shadow);
+  background-color: var(--primary-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: var(--btn-border-radius);
+  width: 100%;
+  gap: 20px;
+  border-top: 6px solid var(--accent-color);
+  position: relative;
+  padding: 40px;
+  max-width: 400px;
+}
+.purchase-tokens-modal div {
+  display: flex;
+  gap: 20px;
+}
+.purchase-tokens-modal div button {
+  font-size: var(--font-size-xs);
+}
+.purchase-tokens-modal h1 {
+  font-size: var(--font-size-sm);
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .table-container {
+    overflow-x: auto;
+    max-height: none;
+  }
+  table {
+    display: block;
+    white-space: nowrap;
+  }
+  th,
+  td {
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
+}
 @keyframes spin {
   0% {
     transform: rotate(0deg);

@@ -1,4 +1,4 @@
-import { checkAuth } from './utils/auth.js'
+import { checkAuth } from './utils/utilities.js'
 
 window.onload = async () => {
   const authData = await checkAuth()
@@ -21,7 +21,9 @@ const logPasswordErr = document.querySelector('#log-password-err')
 
 async function postLoginData(url, data) {
   loginBtn.disabled = true
+  loginBtn.innerHTML = ''
   loginBtn.textContent = 'Logging in...'
+
   try {
     const response = await fetch(url, {
       method: 'POST',

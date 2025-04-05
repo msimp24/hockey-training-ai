@@ -6,8 +6,6 @@ const createCheckoutSession = async (req, res) => {
   const { id } = req.body
   let item
 
-  console.log(id)
-
   db.get(
     'SELECT id, package_name, token_amount, price from tokens where id = (?)',
     [id],
@@ -24,6 +22,7 @@ const createCheckoutSession = async (req, res) => {
             messaeg: 'Row with that id not found',
           })
         }
+
         item = row
 
         try {
@@ -77,4 +76,56 @@ const getPriceData = (req, res) => {
   })
 }
 
-module.exports = { createCheckoutSession, getPriceData }
+const getTokenCount = (req, res) => {
+  const userId = req.params.id
+
+  db.get('SELECT tokens from users where id = (?)', [userId], (err, tokens) => {
+    if (err) {
+      return res.status(500).json({
+        status: 'failed',
+        message: 'Internal Service Err: ' + err,
+      })
+    } else {
+      return res.status(200).send(tokens)
+    }
+  })
+}
+
+const successfulPayment = async (req, res) => {
+  const sig = req.headers['stripe-signature']
+  let event
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET
+    )
+  } catch (err) {
+    console.error('⚠️ Webhook signature verification failed:', err.message)
+    return res.status(400).send(`Webhook Error: ${err.message}`)
+  }
+
+  // Handle the checkout session
+  if (event.type === 'checkout.session.completed') {
+    const session = event.data.object
+    const userEmail = session.customer_email
+    const amountPaid = session.amount_total / 100
+    const stripePaymentId = session.id
+
+    console.log('✅ Checkout Session Completed:')
+    console.log(`👤 Email: ${userEmail}`)
+    console.log(`💵 Amount Paid: $${amountPaid}`)
+    console.log(`🆔 Stripe Payment ID: ${stripePaymentId}`)
+  }
+
+  // Always respond with 200 OK
+  res.status(200).json({ received: true })
+}
+
+module.exports = {
+  createCheckoutSession,
+  getPriceData,
+  getTokenCount,
+  successfulPayment,
+}

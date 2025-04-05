@@ -1,4 +1,4 @@
-import { checkAuth, fetchUserData } from './utils/auth.js'
+import { checkAuth, fetchUserData } from './utils/utilities.js'
 
 const homeRegisterBtn = document.querySelector('#register-btn')
 const homeLoginBtn = document.querySelector('#login')
@@ -12,6 +12,7 @@ async function checkStatus() {
 
   if (authData.loggedIn) {
     //removes login and register button if user already has an account
+
     homeRegisterBtn.style.display = 'none'
     homeLoginBtn.style.display = 'none'
 
@@ -37,6 +38,7 @@ homeLoginBtn.addEventListener('click', () => {
 })
 
 getStartedBtn.addEventListener('click', () => {
+  console.log('test')
   window.location.href = '/register'
 })
 

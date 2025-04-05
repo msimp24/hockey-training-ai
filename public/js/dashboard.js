@@ -1,4 +1,19 @@
-import { checkAuth, logout, fetchUserData, fetchData } from './utils/auth.js'
+import {
+  checkAuth,
+  logout,
+  fetchUserData,
+  fetchData,
+  fetchUserTokens,
+} from './utils/utilities.js'
+import {
+  createNotEnoughTokens,
+  createWorkoutFormHtml,
+} from './utils/createWorkoutForm.js'
+
+const http =
+  window.location.hostname === 'localhost'
+    ? 'http://localhost:3000/'
+    : 'http://68.183.194.171/'
 
 document.addEventListener('DOMContentLoaded', async () => {
   const currentLocation = window.location.pathname
@@ -23,9 +38,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       // gets the name of the user that is logged in
 
       //get the number of phases for the current workout
+
+      /*
       try {
         const response = await fetch(
-          'http://localhost:3000/workout/get-num-phases',
+          `${http}workout/get-num-phases`,
           {
             credentials: 'include',
           }
@@ -45,14 +62,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         phaseSelect.addEventListener('change', function () {
           //creates the workout cards and displays them on the dashboard page
-
-          getCurrentWorkoutPhase(authData.userId, this.value)
         })
       } catch (err) {
         console.error(err)
       }
+        */
+
+      //generates workout selected by the user
+
+      getCurrentWorkoutPhase(authData.userId, 0)
 
       //creates program summary of the workout
+
       createProgramSummary(authData.userId)
     } else {
       window.location.href = '/login'
@@ -61,144 +82,214 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (currentLocation === '/dashboard/create-workout') {
     //form selectors and handling form errors and submit
-    const generateWorkoutForm = document.querySelector('#generate-workout-form')
 
-    //input selectors and error selectors
-    const programNameInput = document.querySelector('#program-name-input')
-    const programNameErr = document.querySelector('#name-err')
+    //modal selector for the create workout form
+    const createWorkoutModal = document.querySelector('.modal-overlay')
 
-    const ageInput = document.querySelector('#age-input')
-    const ageErr = document.querySelector('#age-err')
+    //creates a new workout form modal for user to generate workout phase
+    const createWorkoutForm = document.createElement('div')
 
-    const skillInput = document.querySelector('#skill-input')
-    const skillErr = document.querySelector('#skill-err')
+    //directs user to the add tokens page from create workout page
+    const addTokensBtn = document.querySelector('#add-tokens-btn')
 
-    const phaseInput = document.querySelector('#phase-input')
-    const phaseErr = document.querySelector('#phase-err')
+    //selects user tokens
+    const userTokenH1 = document.querySelector('#user-tokens')
+    let data = await fetchUserTokens(
+      `${http}payments/get-tokens`,
+      authData.userId
+    )
+    userTokenH1.textContent = 'Tokens: ' + data.tokens
 
-    const numWorkoutsInput = document.querySelector('#num-workouts-input')
-    const numWorkoutsErr = document.querySelector('#num-workouts-err')
+    addTokensBtn.addEventListener('click', () => {
+      window.location.href = '/dashboard/buy-tokens'
+    })
 
-    const workoutTimeInput = document.querySelector('#workout-time-input')
-    const workoutTimeErr = document.querySelector('#workout-time-err')
+    document.querySelectorAll('.purchase-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const id = Number(button.dataset.id)
 
-    const focusErr = document.querySelector('#focus-err')
+        //checks if user has enough tokens to buy the workout, if not, direct user to the purchase tokens page
 
-    const equipmentErr = document.querySelector('#equipment-err')
+        //may look into adding getting these values from the database for future functionality
 
-    generateWorkoutForm.addEventListener('submit', (e) => {
-      e.preventDefault()
+        let workoutCost
 
-      let isValid = true
-
-      let workoutForm = {}
-      workoutForm.userId = authData.userId
-
-      if (!programNameInput.value) {
-        programNameErr.textContent = 'This is a required field'
-        isValid = false
-      } else {
-        programNameErr.textContent = ''
-        isValid = true
-        workoutForm.programName = programNameInput.value
-      }
-
-      if (!ageInput.value) {
-        ageErr.textContent = 'Age is a required field'
-        isValid = false
-      } else {
-        if (!Number.isInteger(Number(ageInput.value))) {
-          ageErr.textContent = 'Age must be a number'
-          isValid = false
-        } else {
-          isValid = true
-          ageErr.textContent = ''
-          workoutForm.age = Number(ageInput.value)
+        if (id == 1) {
+          workoutCost = 15
         }
-      }
+        if (id == 2) {
+          workoutCost = 30
+        }
+        if (id == 3) {
+          workoutCost = 45
+        }
 
-      if (skillInput.value === 'Select') {
-        skillErr.textContent = 'Skill level is a required field'
-        isValid = false
-      } else {
-        isValid = true
-        skillErr.textContent = ''
-        workoutForm.skillLevel = skillInput.value
-      }
+        //if users token count is less than the cost of a workout, then a modal appears to guide the user to buy more tokens or cancel
+        if (data.tokens < workoutCost) {
+          createWorkoutForm.innerHTML = createNotEnoughTokens()
+          createWorkoutModal.append(createWorkoutForm)
+          createWorkoutModal.style.display = 'flex'
 
-      if (phaseInput.value === 'Select') {
-        phaseErr.textContent = 'Selecting a phase is a required field'
-        isValid = false
-      } else {
-        isValid = true
-        phaseErr.textContent = ''
-        workoutForm.programDuration = Number(phaseInput.value)
-      }
+          const purchaseMoreTokens = document.querySelector(
+            '#purchase-more-tokens'
+          )
+          const cancelMoreTokens = document.querySelector('#cancel-more-tokens')
 
-      if (numWorkoutsInput.value === 'Select') {
-        numWorkoutsErr.textContent =
-          'Selecting the number of workouts is a required field'
-        isValid = false
-      } else {
-        isValid = true
-        numWorkoutsErr.textContent = ''
-        workoutForm.workoutsPerWeek = Number(numWorkoutsInput.value)
-      }
+          purchaseMoreTokens.addEventListener('click', () => {
+            window.location.href = '/dashboard/buy-tokens'
+          })
+          cancelMoreTokens.addEventListener('click', () => {
+            createWorkoutModal.style.cssText = `
+          display:'flex'
+          `
+          })
+        } else {
+          createWorkoutForm.innerHTML = createWorkoutFormHtml(id)
 
-      if (workoutTimeInput.value === 'Select') {
-        workoutTimeErr.textContent =
-          'Selecting a workout time is a required field'
-        isValid = false
-      } else {
-        isValid = true
-        workoutTimeErr.textContent = ''
-        workoutForm.timeLimit = Number(workoutTimeInput.value)
-      }
+          createWorkoutModal.append(createWorkoutForm)
+          createWorkoutModal.style.display = 'flex'
 
-      // Collect selected focus areas and join them into a string (comma-separated)
-      const selectedFocus = Array.from(
-        document.querySelectorAll('#focus-checkbox input:checked')
-      )
-        .map((checkbox) => checkbox.value) // Get the value of each checked checkbox
-        .join(',') // Join the values into a single string
+          const modalCloseBtn = document.querySelector('.close-modal-btn')
+          modalCloseBtn.addEventListener('click', () => {
+            createWorkoutModal.style.cssText = `
+          display:'flex'
+          `
+          })
 
-      if (!selectedFocus) {
-        focusErr.textContent = 'Please select at least one focus area.'
-        isValid = false
-      } else if (selectedFocus.split(',').length > 3) {
-        focusErr.textContent = 'You can select a maximum of 3 focus areas.'
-        isValid = false
-      } else {
-        focusErr.textContent = ''
-        workoutForm.improvements = selectedFocus // Save as a string
-      }
+          const generateWorkoutForm = document.querySelector(
+            '#generate-workout-form'
+          )
 
-      // Collect selected equipment options and join them into a string (comma-separated)
-      const selectedEquipment = Array.from(
-        document.querySelectorAll('#equipment-checkbox input:checked')
-      )
-        .map((checkbox) => checkbox.value) // Get the value of each checked checkbox
-        .join(',') // Join the values into a single string
+          //input selectors and error selectors
+          const programNameInput = document.querySelector('#program-name-input')
+          const programNameErr = document.querySelector('#name-err')
 
-      if (!selectedEquipment) {
-        equipmentErr.textContent =
-          'Please select at least one equipment option.'
-        isValid = false
-      } else {
-        equipmentErr.textContent = ''
-        workoutForm.availableEquipment = selectedEquipment // Save as a string
-      }
+          const ageInput = document.querySelector('#age-input')
+          const ageErr = document.querySelector('#age-err')
 
-      if (isValid) {
-        generateWorkout(workoutForm, 'http://localhost:3000/workout/generate')
-      }
+          const skillInput = document.querySelector('#skill-input')
+          const skillErr = document.querySelector('#skill-err')
+
+          const phaseInput = document.querySelector('#phase-input')
+          const phaseErr = document.querySelector('#phase-err')
+
+          const numWorkoutsInput = document.querySelector('#num-workouts-input')
+          const numWorkoutsErr = document.querySelector('#num-workouts-err')
+
+          const workoutTimeInput = document.querySelector('#workout-time-input')
+          const workoutTimeErr = document.querySelector('#workout-time-err')
+
+          const focusInput = document.querySelector('#focus-input')
+          const focusErr = document.querySelector('#focus-err')
+
+          const equipmentErr = document.querySelector('#equipment-err')
+
+          generateWorkoutForm.addEventListener('submit', (e) => {
+            e.preventDefault()
+
+            let isValid = true
+
+            let workoutForm = {}
+            workoutForm.userId = authData.userId
+            workoutForm.programDuration = Number(phaseInput.value)
+
+            if (!programNameInput.value) {
+              programNameErr.textContent = 'This is a required field'
+              isValid = false
+            } else {
+              programNameErr.textContent = ''
+              isValid = true
+              workoutForm.programName = programNameInput.value
+            }
+
+            if (!ageInput.value) {
+              ageErr.textContent = 'Age is a required field'
+              isValid = false
+            } else {
+              if (!Number.isInteger(Number(ageInput.value))) {
+                ageErr.textContent = 'Age must be a number'
+                isValid = false
+              } else {
+                isValid = true
+                ageErr.textContent = ''
+                workoutForm.age = Number(ageInput.value)
+              }
+            }
+
+            if (skillInput.value === 'Select') {
+              skillErr.textContent = 'Skill level is a required field'
+              isValid = false
+            } else {
+              isValid = true
+              skillErr.textContent = ''
+              workoutForm.skillLevel = skillInput.value
+            }
+
+            if (numWorkoutsInput.value === 'Select') {
+              numWorkoutsErr.textContent =
+                'Selecting the number of workouts is a required field'
+              isValid = false
+            } else {
+              isValid = true
+              numWorkoutsErr.textContent = ''
+              workoutForm.workoutsPerWeek = Number(numWorkoutsInput.value)
+            }
+
+            if (workoutTimeInput.value === 'Select') {
+              workoutTimeErr.textContent =
+                'Selecting a workout time is a required field'
+              isValid = false
+            } else {
+              isValid = true
+              workoutTimeErr.textContent = ''
+              workoutForm.timeLimit = Number(workoutTimeInput.value)
+            }
+
+            if (
+              focusInput &&
+              focusInput.value !== null &&
+              focusInput.value !== undefined
+            ) {
+              if (focusInput.value === 'Select') {
+                focusErr.textContent =
+                  'Selecting a workout phase is a required field'
+                isValid = false
+              } else {
+                isValid = true
+                focusErr.textContent = ''
+                workoutForm.improvements = focusInput.value
+              }
+            }
+            // Collect selected equipment options and join them into a string (comma-separated)
+            const selectedEquipment = Array.from(
+              document.querySelectorAll('#equipment-checkbox input:checked')
+            )
+              .map((checkbox) => checkbox.value) // Get the value of each checked checkbox
+              .join(',') // Join the values into a single string
+
+            if (!selectedEquipment) {
+              equipmentErr.textContent =
+                'Please select at least one equipment option.'
+              isValid = false
+            } else {
+              equipmentErr.textContent = ''
+              workoutForm.availableEquipment = selectedEquipment // Save as a string
+            }
+
+            if (isValid) {
+              console.log(workoutForm)
+              generateWorkout(workoutForm, `${http}/workout/generate`)
+            }
+          })
+        }
+      })
     })
   }
 
   // if location is at the all workouts page
   if (currentLocation === '/dashboard/all-workouts') {
     const data = await fetchData(
-      `http://localhost:3000/workout/get-all-workouts/${authData.userId}`
+      `${http}workout/get-all-workouts/${authData.userId}`
     )
     const allWorkoutsGrid = document.querySelector('.all-workout-grid')
 
@@ -217,9 +308,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   if (currentLocation === '/dashboard/buy-tokens') {
-    const data = await fetchData(
-      `http://localhost:3000/payments/get-price-data`
+    //selects user tokens
+    const userTokenH2 = document.querySelector('#user-tokens-2')
+    let json = await fetchUserTokens(
+      `${http}payments/get-tokens`,
+      authData.userId
     )
+    userTokenH2.textContent = 'Tokens: ' + json.tokens
+
+    const data = await fetchData(`${http}payments/get-price-data`)
 
     const pricingCardContainer = document.querySelector(
       '.pricing-card-container'
@@ -239,7 +336,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         try {
           const response = await fetch(
-            `http://localhost:3000/payments/create-payment-session`,
+            `${http}payments/create-payment-session`,
             {
               method: 'POST',
               headers: {
@@ -269,12 +366,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 const getCurrentWorkoutPhase = async (userId, phase) => {
   try {
-    const response = await fetch(
-      `http://localhost:3000/workout/get-current-phase/${userId}`,
-      {
-        credentials: 'include',
-      }
-    )
+    const response = await fetch(`${http}workout/get-current-phase/${userId}`, {
+      credentials: 'include',
+    })
     const workoutsGrid = document.querySelector('.workouts-grid')
 
     const workouts = await response.json()
@@ -310,36 +404,39 @@ const getCurrentWorkoutPhase = async (userId, phase) => {
 
 //Creates program summary on the dashboard page based on the users current workout plan
 const createProgramSummary = async (userId) => {
-  const response = await fetch(
-    `http://localhost:3000/workout/program/${userId}`,
-    {
-      credentials: 'include',
-    }
-  )
-  const programCard = document.querySelector('.program-card')
-  const noWorkoutCard = document.querySelector('.no-workout.card')
+  const response = await fetch(`${http}workout/program/${userId}`, {
+    credentials: 'include',
+  })
+  const programCard = document.createElement('div')
+  programCard.classList.add('program-card')
+  const workoutWrapper = document.querySelector('#workout-wrapper')
 
-  if (isNaN(programCard)) {
+  let program = await response.json()
+
+  if (program.length == 0) {
     const createWorkoutBtn = document.createElement('button')
     const noWorkoutsh1 = document.createElement('h2')
+    workoutWrapper.style.cssText = `
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    `
 
-    noWorkoutsh1.textContent = 'Currently no workouts selected'
+    noWorkoutsh1.textContent = 'Currently no workouts created'
 
-    createWorkoutBtn.textContent = 'Select Workout'
+    createWorkoutBtn.textContent = 'Generate Workout'
     createWorkoutBtn.classList.add('create-workout-btn')
 
     createWorkoutBtn.addEventListener('click', () => {
-      window.location.href = '/dashboard/all-workouts'
+      window.location.href = '/dashboard/create-workout'
     })
 
-    programCard.append(noWorkoutsh1)
-    programCard.append(createWorkoutBtn)
-  }
-
-  let program = await response.json()
-  program = JSON.parse(program[0].program)
-
-  programCard.innerHTML = `
+    workoutWrapper.append(noWorkoutsh1)
+    workoutWrapper.append(createWorkoutBtn)
+  } else {
+    program = JSON.parse(program[0].program)
+    programCard.innerHTML = `
           <h2>Program Summary</h2>
             <hr />
             <div>
@@ -363,7 +460,14 @@ const createProgramSummary = async (userId) => {
               <p class="title">Equipment Requirements:</p>
               <p class="desc">${program.equipmentRequired}</p>
             </div>
+          
   `
+
+    workoutWrapper.append(programCard)
+    workoutWrapper.style.cssText = `
+    display:block;
+    `
+  }
 }
 
 //Create workout card
@@ -506,7 +610,7 @@ const createAllWorkoutsCard = (workout) => {
 const setCurrentWorkout = async (workoutId) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/workout/set-current-workout/${workoutId}`,
+      `${http}workout/set-current-workout/${workoutId}`,
       {
         method: 'PUT',
         credentials: 'include',

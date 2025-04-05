@@ -19,17 +19,18 @@ const generateWorkout = async (req, res) => {
 
   let repeat = 0
   let phaseTarget = ''
-
-  let split = improvements.split(',')
-  console.log(split)
+  let tokenCost = 0
 
   if (programDuration == 4) {
+    tokenCost = 15
     repeat = 1
-    phaseTarget = `Create 1 phase that focuses on ${improvements || 'Strength'}`
+    phaseTarget = `Create 1 phase that focuses on ${improvements}`
   } else if (programDuration == 8) {
+    tokenCost = 30
     repeat = 2
-    phaseTarget = `Create 2 seperate phases that focus on ${split[0]} and ${split[1]}`
+    phaseTarget = `Create 2 seperate phases that focus on strength and power`
   } else if (programDuration == 12) {
+    tokenCost = 45
     repeat = 3
   }
 
@@ -42,7 +43,7 @@ Key requirements:
 -Include at least 5 warmup exercises
 - Must have ${workoutsPerWeek} days of workouts
 - Format workout is an example and can be changed for different ${improvements}
-- Strength phase must have at least two upper body and two lower body days if ${workoutsPerWeek} is 4 or higher
+
 
 Constraints:
 - Age: ${age}, Skill level: ${skillLevel}, Equipment: ${availableEquipment}
@@ -55,14 +56,14 @@ Format:
     "duration": "${programDuration} weeks (repeat ${
     programDuration / repeat
   } times)",
-    "focus": [${improvements.split(',')}],
+    "focus": [${improvements}],
     "workoutsPerWeek": ${workoutsPerWeek},
     "durationPerWorkout": "${timeLimit} mins",
     "equipmentRequired": ${availableEquipment}"
   },
   "phases": [
     {
-      "phase_focus": "Strength",
+      "phase_focus": "${improvements}",
       "phase_number": 1,
       "weekly_schedule": [
         {
@@ -76,7 +77,7 @@ Format:
             ],
             "main_workout": [
             /* example lift */
-              "1A Back Squat, 5x5 @ 80-85% 1RM",
+              "1A Back Squat, 4x8 @ 80-85% 1RM",
               "1B Romanian Deadlift, 4x6",
               "2A Bulgarian Split Squat, 4x8/leg",
               "2B Single leg glute bridge, 3x10/leg",
@@ -150,9 +151,41 @@ Format:
           console.error('Error inserting workout:', err.message)
           return res.status(500).send(err)
         } else {
-          return res.status(200).send({
-            status: 'success',
-            message: 'data successfully added to the DB',
+          let query = `SELECT workoutId 
+            FROM workouts 
+            WHERE userId = (?)
+            order by workoutId limit 1`
+
+          db.get(query, [userId], (err, row) => {
+            if (err) {
+              console.log('Could not find a workout with that ')
+            } else {
+              let query =
+                'INSERT INTO token_transactions(user_id, amount, workout_id) values (?, ?, ?)'
+
+              let workoutId = row.workoutId
+
+              db.run(query, [userId, tokenCost, workoutId], (err) => {
+                if (err) {
+                  console.log('Error adding to token transaction table')
+                } else {
+                  //update user token count
+
+                  let query = `update users set tokens = tokens - (?)`
+
+                  db.run(query, [tokenCost], (err) => {
+                    if (err) {
+                      console.log('Error updating the user token count')
+                    } else {
+                      return res.status(200).send({
+                        status: 'success',
+                        message: 'data successfully added to the DB',
+                      })
+                    }
+                  })
+                }
+              })
+            }
           })
         }
       }

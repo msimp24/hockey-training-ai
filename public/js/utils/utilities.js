@@ -65,3 +65,20 @@ export async function fetchData(url) {
     return { error: err.message || 'Unknown error occurred' }
   }
 }
+
+export async function fetchUserTokens(url, userId) {
+  try {
+    const response = await fetch(`${url}/${userId}`, {
+      credentials: 'include',
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`)
+    }
+    const data = await response.json()
+    return data
+  } catch (err) {
+    console.error('Error fetching data:', err.message || err)
+    return { error: err.message || 'Unknown error occurred' }
+  }
+}
