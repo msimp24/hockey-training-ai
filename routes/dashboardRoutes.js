@@ -2,6 +2,9 @@ const express = require('express')
 const router = express.Router()
 
 router.route('/').get((req, res) => {
+  console.log('the secret key is')
+
+  console.log(process.env.SECRET_KEY)
   res.render('dashboard-layout', { page: 'dashboard/dashboard' })
 })
 
