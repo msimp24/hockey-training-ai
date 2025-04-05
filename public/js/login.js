@@ -3,7 +3,7 @@ import { checkAuth } from './utils/utilities.js'
 const http =
   window.location.hostname === 'localhost'
     ? 'http://localhost:3000/'
-    : 'http://68.183.194.171/'
+    : 'http://68.183.194.171:3000/'
 
 window.onload = async () => {
   const authData = await checkAuth()
