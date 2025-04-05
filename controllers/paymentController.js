@@ -93,11 +93,12 @@ const getTokenCount = (req, res) => {
 
 const successfulPayment = async (req, res) => {
   const sig = req.headers['stripe-signature']
+  const rawBody = req.body.toString('utf8') // Get the raw body as a string
   let event
 
   try {
     event = stripe.webhooks.constructEvent(
-      req.body,
+      rawBody,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET
     )
