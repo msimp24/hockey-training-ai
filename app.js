@@ -4,6 +4,7 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 require('dotenv').config()
 const path = require('path')
+const bodyParser = require('body-parser')
 
 //routers
 const authRouter = require('./routes/authRoute')
@@ -15,6 +16,7 @@ const paymentRouter = require('./routes/paymentRoutes')
 
 const app = express()
 app.use(express.json())
+app.use(bodyParser.json())
 
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))
