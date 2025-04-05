@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (isValid) {
               console.log(workoutForm)
-              generateWorkout(workoutForm, `${http}/workout/generate`)
+              generateWorkout(workoutForm, `${http}workout/generate`)
             }
           })
         }
