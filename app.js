@@ -15,7 +15,6 @@ const paymentRouter = require('./routes/paymentRoutes')
 
 const app = express()
 
-app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'))
@@ -37,5 +36,7 @@ app.use('/workout', workoutRouter)
 app.use('/user', userRouter)
 app.use('/dashboard', dashboardRouter)
 app.use('/payments', paymentRouter)
+
+app.use(express.json())
 
 module.exports = app
