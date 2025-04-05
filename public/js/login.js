@@ -1,5 +1,10 @@
 import { checkAuth } from './utils/utilities.js'
 
+const http =
+  window.location.hostname === 'localhost'
+    ? 'http://localhost:3000/'
+    : 'http://68.183.194.171/'
+
 window.onload = async () => {
   const authData = await checkAuth()
 
@@ -80,6 +85,6 @@ loginForm.addEventListener('submit', (e) => {
   }
 
   if (isValid) {
-    postLoginData('http://localhost:3000/auth/login', user)
+    postLoginData(`${http}auth/login`, user)
   }
 })

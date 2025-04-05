@@ -5,6 +5,11 @@ registerLoginBtn.addEventListener('click', () => {
   window.location.href = '/login'
 })
 
+const http =
+  window.location.hostname === 'localhost'
+    ? 'http://localhost:3000/'
+    : 'http://68.183.194.171/'
+
 //selectors for regstration button and form
 const registerSubmitBtn = document.getElementById('register-btn')
 const registerForm = document.querySelector('#register-form')
@@ -125,6 +130,6 @@ registerForm.addEventListener('submit', (e) => {
   }
 
   if (isValid) {
-    postRegisterData(user, 'http://localhost:3000/workout/generate')
+    postRegisterData(user, `${http}workout/generate`)
   }
 })
