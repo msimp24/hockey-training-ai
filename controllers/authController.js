@@ -182,6 +182,8 @@ const loginUser = (req, res) => {
   const email = req.body.email
   const password = req.body.password
 
+  console.log('the secret key is')
+
   console.log(process.env.SECRET_KEY)
 
   db.get('SELECT * FROM users where email = ?', [email], (err, user) => {
