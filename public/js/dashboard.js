@@ -13,7 +13,7 @@ import {
 const http =
   window.location.hostname === 'localhost'
     ? 'http://localhost:3000/'
-    : 'http://68.183.194.171/'
+    : 'http://68.183.194.171:3000/'
 
 document.addEventListener('DOMContentLoaded', async () => {
   const currentLocation = window.location.pathname

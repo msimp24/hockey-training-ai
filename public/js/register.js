@@ -8,7 +8,7 @@ registerLoginBtn.addEventListener('click', () => {
 const http =
   window.location.hostname === 'localhost'
     ? 'http://localhost:3000/'
-    : 'http://68.183.194.171/'
+    : 'http://68.183.194.171:3000/'
 
 //selectors for regstration button and form
 const registerSubmitBtn = document.getElementById('register-btn')

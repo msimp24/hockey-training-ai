@@ -1,6 +1,11 @@
+export const http =
+  window.location.hostname === 'localhost'
+    ? 'http://localhost:3000/'
+    : 'http://68.183.194.171:3000/'
+
 export async function checkAuth() {
   try {
-    const response = await fetch('http://localhost:3000/auth/check-auth', {
+    const response = await fetch(`${http}auth/check-auth`, {
       credentials: 'include',
     })
     const data = await response.json()
@@ -14,7 +19,7 @@ export async function checkAuth() {
 
 export async function logout() {
   try {
-    const response = await fetch('http://localhost:3000/auth/logout', {
+    const response = await fetch(`${http}auth/logout`, {
       method: 'POST',
       credentials: 'include', // Ensures cookies are included
     })
@@ -32,7 +37,7 @@ export async function logout() {
 
 export async function fetchUserData(userId) {
   try {
-    const response = await fetch(`http://localhost:3000/user/${userId}`, {
+    const response = await fetch(`${http}user/${userId}`, {
       credentials: 'include',
     })
 
