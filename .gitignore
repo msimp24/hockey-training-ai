@@ -1,2 +1,5 @@
 node_modules
 .env
+# Ignore SQLite database and its temporary files
+data/database.db-shm
+data/database.db-wal
