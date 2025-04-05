@@ -161,7 +161,7 @@ Format:
               console.log('Could not find a workout with that ')
             } else {
               let query =
-                'INSERT INTO token_transactions(user_id, amount, workout_id) values (?, ?, ?)'
+                'INSERT INTO token_transactions(user_id, amount, workoutId) values (?, ?, ?)'
 
               let workoutId = row.workoutId
 

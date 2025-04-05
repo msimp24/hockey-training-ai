@@ -19,7 +19,13 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'))
-app.use(cors())
+app.use(
+  cors({
+    origin: 'http://localhost:3000/', // Set the allowed frontend URL here
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true, // Allow credentials (cookies)
+  })
+)
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.set('view engine', 'ejs')
