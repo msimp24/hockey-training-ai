@@ -20,7 +20,7 @@ app.use(cookieParser())
 app.use(morgan('dev'))
 app.use(
   cors({
-    origin: 'http://localhost:3000/', // Set the allowed frontend URL here
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000', // Set the allowed frontend URL here
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true, // Allow credentials (cookies)
   })

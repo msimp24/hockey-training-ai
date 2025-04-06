@@ -93,6 +93,8 @@ const getTokenCount = (req, res) => {
 
 const testBodyParser = (req, res) => {
   console.log(req.body)
+
+  res.send(req.body)
 }
 
 const successfulPayment = async (req, res) => {
@@ -108,7 +110,7 @@ const successfulPayment = async (req, res) => {
     )
   } catch (err) {
     console.error('⚠️ Webhook signature verification failed:', err.message)
-    return res.status(400).send(`Webhook Error: ${err.message}`)
+    return res.status(400).send(`Webhook Error: ${err.message}, ${req.body}`)
   }
 
   // Handle the checkout session

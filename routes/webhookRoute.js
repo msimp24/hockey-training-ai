@@ -9,4 +9,11 @@ router
     paymentController.successfulPayment
   )
 
+router
+  .route('/test')
+  .post(
+    express.raw({ type: 'application/json' }),
+    paymentController.testBodyParser
+  )
+
 module.exports = router
