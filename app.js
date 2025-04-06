@@ -12,6 +12,7 @@ const workoutRouter = require('./routes/workoutRoute')
 const userRouter = require('./routes/userRoute')
 const dashboardRouter = require('./routes/dashboardRoutes')
 const paymentRouter = require('./routes/paymentRoutes')
+const webhookRouter = require('./routes/webhookRoute')
 
 const app = express()
 
@@ -29,11 +30,12 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
-app.use('/payments', paymentRouter)
+app.use('/webhook', webhookRouter)
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+app.use('/payments', paymentRouter)
 app.use('/auth', authRouter)
 app.use('/', staticRouter)
 app.use('/workout', workoutRouter)
