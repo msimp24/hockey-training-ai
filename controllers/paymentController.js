@@ -94,7 +94,7 @@ const getTokenCount = (req, res) => {
 const testBodyParser = (req, res) => {
   console.log(req.body)
 
-  res.send(req.body)
+  res.send('this is a webhook route')
 }
 
 const successfulPayment = async (req, res) => {

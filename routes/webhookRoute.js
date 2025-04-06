@@ -10,8 +10,8 @@ router
   )
 
 router
-  .route('/test')
-  .post(
+  .route('/tester')
+  .get(
     express.raw({ type: 'application/json' }),
     paymentController.testBodyParser
   )
