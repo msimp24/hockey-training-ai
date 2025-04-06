@@ -91,6 +91,10 @@ const getTokenCount = (req, res) => {
   })
 }
 
+const testBodyParser = (req, res) => {
+  console.log(req.body)
+}
+
 const successfulPayment = async (req, res) => {
   const sig = req.headers['stripe-signature']
   console.log(req.body)
@@ -129,4 +133,5 @@ module.exports = {
   getPriceData,
   getTokenCount,
   successfulPayment,
+  testBodyParser,
 }
