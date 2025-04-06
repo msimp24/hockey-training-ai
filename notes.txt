@@ -29,3 +29,5 @@ Deduct the required tokens.
 Insert a workout record.
 
 Insert a transaction (type = 'workout_usage').
+
+when making app secure, fix login function on both the frontend and the backend
