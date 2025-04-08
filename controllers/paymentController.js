@@ -4,8 +4,7 @@ const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
 
 const createCheckoutSession = async (req, res) => {
   const id = req.body.id
-  const userId = req.body.id
-  console.log(userId)
+  const userId = req.body.userId
   let item
 
   db.get(
@@ -132,6 +131,8 @@ const successfulPayment = async (req, res) => {
     console.log(`👤 Email: ${email}`)
     console.log(`💵 Amount Paid: $${amountPaid}`)
     console.log(`🆔 Stripe Payment ID: ${stripePaymentId}`)
+    console.log(`💵 User Id: $${userId}`)
+    console.log(`🆔 Token Amount${tokenAmount}`)
   }
 
   // Always respond with 200 OK
