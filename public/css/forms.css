@@ -73,6 +73,8 @@ body {
 .form-background h1 {
   color: var(--primary-light);
   font-size: var(--font-size-xl);
+  text-align: center;
+  padding: 20px;
 }
 
 .layout {
@@ -214,5 +216,23 @@ button:focus {
   }
   .right-side {
     width: 100%;
+  }
+}
+
+@media (width< 800px) {
+  .form-background h1 {
+    font-size: var(--font-size-lg);
+  }
+
+  .register-form h2 {
+    font-size: var(--font-size-md);
+  }
+  .register-form input {
+    font-size: var(--font-size-xs);
+  }
+
+  .input-box label {
+    font-size: var(--font-size-xs);
+    color: var(--primary-light);
   }
 }

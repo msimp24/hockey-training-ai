@@ -3,7 +3,9 @@ require('dotenv').config()
 const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
 
 const createCheckoutSession = async (req, res) => {
-  const { id } = req.body
+  const id = req.body.id
+  const email = req.body.email
+  console.log(email)
   let item
 
   db.get(
@@ -13,13 +15,13 @@ const createCheckoutSession = async (req, res) => {
       if (err) {
         return res.status(500).json({
           status: 'failed',
-          messaeg: 'Internal service error',
+          message: 'Internal service error',
         })
       } else {
         if (!row) {
           return res.status(404).json({
             status: 'failed',
-            messaeg: 'Row with that id not found',
+            message: 'Row with that id not found',
           })
         }
 
@@ -29,6 +31,7 @@ const createCheckoutSession = async (req, res) => {
           const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
+            customer_email: email,
             line_items: [
               {
                 price_data: {

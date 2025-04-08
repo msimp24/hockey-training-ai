@@ -23,9 +23,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const currUser = document.querySelector('#curr-user')
 
   logoutBtn.addEventListener('click', logout)
+  const userData = await fetchUserData(authData.userId)
 
   if (authData.loggedIn) {
-    const userData = await fetchUserData(authData.userId)
     currUser.textContent = `Hello, ${userData.firstName}`
   } else {
     window.location.href = '/login'
@@ -308,6 +308,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   if (currentLocation === '/dashboard/buy-tokens') {
+    //gets data of the user that is logged in
+    const userData = await fetchUserData(authData.userId)
+
     //selects user tokens
     const userTokenH2 = document.querySelector('#user-tokens-2')
     let json = await fetchUserTokens(
@@ -331,8 +334,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelectorAll('.token-btn').forEach((button) => {
       button.addEventListener('click', async (event) => {
         const cardId = event.target.getAttribute('date-id')
-        let id = { id: Number(cardId) }
-        console.log(JSON.stringify(id))
+        let id = Number(cardId)
+        let data = {}
+        data.id = id
+        data.email = currUser.email
 
         try {
           const response = await fetch(
@@ -342,7 +347,10 @@ document.addEventListener('DOMContentLoaded', async () => {
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify(id),
+              body: JSON.stringify({
+                id: id,
+                email: userData.email,
+              }),
             }
           )
 
