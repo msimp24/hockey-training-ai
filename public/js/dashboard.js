@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       button.addEventListener('click', async (event) => {
         const cardId = event.target.getAttribute('date-id')
         let id = Number(cardId)
-        console.log(userData.userId)
+        console.log(authData.userId)
 
         try {
           const response = await fetch(
@@ -348,7 +348,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               },
               body: JSON.stringify({
                 id: id,
-                userId: userData.userId,
+                userId: authData.userId,
               }),
             }
           )
