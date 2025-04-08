@@ -4,8 +4,7 @@ const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
 
 const createCheckoutSession = async (req, res) => {
   const id = req.body.id
-  const email = req.body.email
-  console.log('The email is: ' + email)
+
   let item
 
   db.get(
@@ -31,7 +30,6 @@ const createCheckoutSession = async (req, res) => {
           const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
-            customer_email: email,
             line_items: [
               {
                 price_data: {
@@ -119,12 +117,12 @@ const successfulPayment = async (req, res) => {
   // Handle the checkout session
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object
-    const userEmail = session.customer_email
+    const email = session.customer_details.email
     const amountPaid = session.amount_total / 100
     const stripePaymentId = session.id
 
     console.log('✅ Checkout Session Completed:')
-    console.log(`👤 Email: ${userEmail}`)
+    console.log(`👤 Email: ${email}`)
     console.log(`💵 Amount Paid: $${amountPaid}`)
     console.log(`🆔 Stripe Payment ID: ${stripePaymentId}`)
   }
