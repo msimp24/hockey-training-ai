@@ -133,10 +133,22 @@ const successfulPayment = async (req, res) => {
     console.log(`🆔 Stripe Payment ID: ${stripePaymentId}`)
     console.log(`💵 User Id: $${userId}`)
     console.log(`🆔 Token Amount${tokenAmount}`)
+
+    addTokensToUser(userId, tokenAmount)
   }
 
   // Always respond with 200 OK
   res.status(200).json({ received: true })
+}
+
+const addTokensToUser = (userId, tokenAmount) => {
+  const query = 'UPDATE users SET tokens = ? WHERE id = ?'
+
+  db.run(query, [tokenAmount, userId], (err) => {
+    if (err) {
+      console.error('Failed to update tokens:', err.message)
+    }
+  })
 }
 
 module.exports = {
