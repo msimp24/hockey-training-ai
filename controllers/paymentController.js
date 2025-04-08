@@ -2,6 +2,8 @@ const db = require('../config/db')
 require('dotenv').config()
 const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
 
+console.log(process.env.SERVER_URL)
+
 const createCheckoutSession = async (req, res) => {
   const id = req.body.id
   const userId = req.body.userId
@@ -42,8 +44,8 @@ const createCheckoutSession = async (req, res) => {
                 quantity: 1,
               },
             ],
-            success_url: `${process.env.SERVER_URL}/dashboard/create-workout`,
-            cancel_url: `${process.env.SERVER_URL}/dashboard/buy-tokens`,
+            success_url: `http://68.183.194.171:3000/dashboard/create-workout`,
+            cancel_url: `http://68.183.194.171:3000/dashboard/buy-tokens`,
             metadata: {
               userId: userId,
               tokenAmount: item.token_amount,
@@ -142,7 +144,7 @@ const successfulPayment = async (req, res) => {
 }
 
 const addTokensToUser = (userId, tokenAmount) => {
-  const query = 'UPDATE users SET tokens = ? WHERE id = ?'
+  const query = 'UPDATE users SET tokens = tokens + ? WHERE id = ?'
 
   db.run(query, [tokenAmount, userId], (err) => {
     if (err) {
