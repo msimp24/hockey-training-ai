@@ -310,6 +310,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (currentLocation === '/dashboard/buy-tokens') {
     //gets data of the user that is logged in
     const userData = await fetchUserData(authData.userId)
+    const userEmail = document.querySelector('#curr-email')
+    userEmail.textContent = userData.email
 
     //selects user tokens
     const userTokenH2 = document.querySelector('#user-tokens-2')
