@@ -5,7 +5,7 @@ const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
 const createCheckoutSession = async (req, res) => {
   const id = req.body.id
   const email = req.body.email
-  console.log(email)
+  console.log('The email is: ' + email)
   let item
 
   db.get(
