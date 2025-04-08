@@ -4,7 +4,8 @@ const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
 
 const createCheckoutSession = async (req, res) => {
   const id = req.body.id
-
+  const userId = req.body.id
+  console.log(userId)
   let item
 
   db.get(
@@ -44,6 +45,10 @@ const createCheckoutSession = async (req, res) => {
             ],
             success_url: `${process.env.SERVER_URL}/dashboard/create-workout`,
             cancel_url: `${process.env.SERVER_URL}/dashboard/buy-tokens`,
+            metadata: {
+              userId: userId,
+              tokenAmount: item.token_amount,
+            },
           })
           res.status(200).json({ url: session.url })
         } catch (err) {
@@ -120,6 +125,8 @@ const successfulPayment = async (req, res) => {
     const email = session.customer_details.email
     const amountPaid = session.amount_total / 100
     const stripePaymentId = session.id
+    const userId = session.metadata.userId
+    const tokenAmount = session.metadata.tokenAmount
 
     console.log('✅ Checkout Session Completed:')
     console.log(`👤 Email: ${email}`)

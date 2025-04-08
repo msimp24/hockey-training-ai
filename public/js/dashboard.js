@@ -111,7 +111,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         //checks if user has enough tokens to buy the workout, if not, direct user to the purchase tokens page
 
         //may look into adding getting these values from the database for future functionality
-
         let workoutCost
 
         if (id == 1) {
@@ -337,6 +336,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       button.addEventListener('click', async (event) => {
         const cardId = event.target.getAttribute('date-id')
         let id = Number(cardId)
+        console.log(userData.userId)
 
         try {
           const response = await fetch(
@@ -348,6 +348,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               },
               body: JSON.stringify({
                 id: id,
+                userId: userData.userId,
               }),
             }
           )
