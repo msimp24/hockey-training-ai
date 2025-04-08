@@ -312,6 +312,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const userData = await fetchUserData(authData.userId)
     const userEmail = document.querySelector('#curr-email')
     userEmail.textContent = userData.email
+    console.log(userData.email)
 
     //selects user tokens
     const userTokenH2 = document.querySelector('#user-tokens-2')
@@ -339,7 +340,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         let id = Number(cardId)
         let data = {}
         data.id = id
-        data.email = currUser.email
+        data.email = userData.email
 
         try {
           const response = await fetch(
