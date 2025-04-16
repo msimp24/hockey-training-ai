@@ -29,9 +29,11 @@ const generateWorkout = async (req, res) => {
     tokenCost = 30
     repeat = 2
     phaseTarget = `Create 2 seperate phases that focus on strength and power`
+    improvements = 'Strength, Power'
   } else if (programDuration == 12) {
     tokenCost = 45
     repeat = 3
+    improvements = 'Strength, Power, Speed'
   }
 
   const prompt = `
