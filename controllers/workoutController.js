@@ -1,6 +1,7 @@
 require('dotenv').config()
 const db = require('../config/db')
 const axios = require('axios')
+const { getPrompts } = require('../data/prompts.js')
 
 const apiKey = process.env.GPT_SECRET_KEY
 
@@ -16,6 +17,18 @@ const generateWorkout = async (req, res) => {
     timeLimit,
     improvements,
   } = req.body
+
+  let test = getPrompts(
+    age,
+    skillLevel,
+    availableEquipment,
+    programDuration,
+    workoutsPerWeek,
+    timeLimit,
+    improvements
+  )
+
+  console.log(test)
 
   let repeat = 0
   let phaseTarget = ''
