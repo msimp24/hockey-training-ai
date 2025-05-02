@@ -809,6 +809,9 @@ th {
 .phase-card h3 {
   font-size: var(--font-size-md);
 }
+.phase-card p {
+  font-size: var(--font-size-sm);
+}
 .center {
   text-align: center;
 }
