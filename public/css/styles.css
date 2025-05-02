@@ -791,6 +791,27 @@ th {
   font-size: var(--font-size-sm);
 }
 
+.phase-card {
+  background: var(--primary-light);
+  border-radius: 12px; /* Softer, rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 24px;
+  border-top: 6px solid var(--accent-color);
+  display: flex;
+  flex-direction: column;
+  align-items: initial;
+  gap: 20px;
+  transition: transform 0.2s ease-in-out;
+}
+.phase-card h1 {
+  text-align: center;
+}
+.phase-card h3 {
+  font-size: var(--font-size-md);
+}
+.center {
+  text-align: center;
+}
 /* Mobile Styles */
 @media (max-width: 768px) {
   .table-container {

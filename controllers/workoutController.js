@@ -1,7 +1,6 @@
 require('dotenv').config()
 const db = require('../config/db')
 const axios = require('axios')
-const { getPrompts } = require('../data/prompts.js')
 
 const apiKey = process.env.GPT_SECRET_KEY
 
@@ -18,18 +17,6 @@ const generateWorkout = async (req, res) => {
     improvements,
   } = req.body
 
-  let test = getPrompts(
-    age,
-    skillLevel,
-    availableEquipment,
-    programDuration,
-    workoutsPerWeek,
-    timeLimit,
-    improvements
-  )
-
-  console.log(test)
-
   let repeat = 0
   let phaseTarget = ''
   let tokenCost = 0
@@ -38,15 +25,6 @@ const generateWorkout = async (req, res) => {
     tokenCost = 15
     repeat = 1
     phaseTarget = `Create 1 phase that focuses on ${improvements}`
-  } else if (programDuration == 8) {
-    tokenCost = 30
-    repeat = 2
-    phaseTarget = `Create 2 seperate phases that focus on strength and power`
-    improvements = 'Strength, Power'
-  } else if (programDuration == 12) {
-    tokenCost = 45
-    repeat = 3
-    improvements = 'Strength, Power, Speed'
   }
 
   const prompt = `
@@ -341,6 +319,50 @@ const getNumberofPhases = (req, res) => {
       return res.status(200).send(row)
     }
   )
+}
+
+async function getWorkoutFromPrompt(prompt, apiKey) {
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${apiKey}`,
+  }
+
+  const requestBody = {
+    model: 'gpt-3.5-turbo',
+    messages: [
+      {
+        role: 'system',
+        content: 'You are a professional strength coach for hockey players.',
+      },
+      { role: 'user', content: prompt },
+    ],
+    max_tokens: 4000,
+    temperature: 0.7,
+  }
+
+  const url = 'https://api.openai.com/v1/chat/completions'
+
+  try {
+    const response = await axios.post(url, requestBody, { headers })
+    const result = response.data.choices[0].message.content
+
+    const tokensUsed = response.data.usage.total_tokens
+    console.log('Tokens used:', tokensUsed)
+
+    const workout = JSON.parse(result)
+    console.log(workout)
+
+    const programSerialize = JSON.stringify(workout.program)
+    const phaseSerialize = JSON.stringify(workout.phases)
+
+    return {
+      programSerialize,
+      phaseSerialize,
+    }
+  } catch (error) {
+    console.error('Error fetching workout:', error.message)
+    throw error
+  }
 }
 
 module.exports = {
