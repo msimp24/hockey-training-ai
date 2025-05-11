@@ -130,6 +130,6 @@ registerForm.addEventListener('submit', (e) => {
   }
 
   if (isValid) {
-    postRegisterData(user, `${http}workout/generate`)
+    postRegisterData(user, `${http}auth/register`)
   }
 })

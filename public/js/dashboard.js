@@ -368,6 +368,48 @@ document.addEventListener('DOMContentLoaded', async () => {
       })
     })
   }
+
+  if (currentLocation === '/dashboard/how-to-videos') {
+    const videoGrid = document.querySelector('.video-grid')
+    const tutorialSearch = document.querySelector('#tutorial-search')
+
+    const data = await fetchData(`${http}workout/workout-tutorials`)
+
+    data.forEach((el) => {
+      let card = document.createElement('div')
+      card.innerHTML = createVideoCard(el.image_url, el.title, el.url)
+      videoGrid.append(card)
+    })
+
+    tutorialSearch.addEventListener('input', async (e) => {
+      videoGrid.innerHTML = ''
+      const query = tutorialSearch.value.toLowerCase()
+
+      const data = await fetchData(
+        `${http}workout/workout-tutorials/?title=${query}`
+      )
+
+      data.forEach((el) => {
+        let card = document.createElement('div')
+        card.innerHTML = createVideoCard(el.image_url, el.title, el.url)
+        videoGrid.append(card)
+      })
+    })
+
+    function createVideoCard(imgUrl, title, videoUrl) {
+      let html = `
+      <a href="${videoUrl}" target="_blank">
+        <div>
+          <img
+          src="${imgUrl}"
+          alt="${title}" />
+          <h2 class="video-h2">${title}</h2>
+        </div>
+      </a>  
+      `
+      return html
+    }
+  }
 })
 
 const getCurrentWorkoutPhase = async (userId, phase) => {

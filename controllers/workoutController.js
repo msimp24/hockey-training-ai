@@ -238,22 +238,28 @@ const getNumberofPhases = (req, res) => {
 }
 
 const getWorkoutTutorialData = (req, res) => {
-  const { title, category } = req.body
-  let query = `
-SELECT * FROM tutorials WHERE title LIKE '%${title}%' and category like '%${category}%'
-`
-  db.all(query, (err, rows) => {
+  let { title = '', category = '' } = req.query
+
+  title = title.trim().toLowerCase()
+  category = category.trim().toLowerCase()
+
+  const query = `
+    SELECT * FROM tutorials
+    WHERE LOWER(title) LIKE '%' || ? || '%'
+      AND LOWER(category) LIKE '%' || ? || '%'
+  `
+
+  db.all(query, [title, category], (err, rows) => {
     if (err) {
       return res.status(500).json({
         status: 'failed',
         message: 'Internal service error',
       })
     } else {
-      return res.status(200).send(rows)
+      return res.status(200).json(rows)
     }
   })
 }
-
 module.exports = {
   generateWorkout,
   getAllWorkouts,
@@ -261,4 +267,5 @@ module.exports = {
   getCurrentProgram,
   setCurrentProgram,
   getNumberofPhases,
+  getWorkoutTutorialData,
 }

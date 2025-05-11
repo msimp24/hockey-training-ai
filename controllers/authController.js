@@ -93,6 +93,7 @@ const registerUser = (req, res) => {
             }
             .btn:hover {
               background-color: #45a049;
+              cursor:pointer;
             }
           </style>
         </head>

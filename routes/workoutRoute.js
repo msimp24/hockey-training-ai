@@ -3,7 +3,9 @@ const router = express.Router()
 const workoutController = require('../controllers/workoutController')
 const authenticate = require('../middleware/authenticate')
 
-router.route('/generate/').post(workoutController.generateWorkout)
+router
+  .route('/generate/')
+  .post(authenticate.protectRoute, workoutController.generateWorkout)
 
 router
   .route('/get-all-workouts/:id')
@@ -22,5 +24,7 @@ router
   .put(workoutController.setCurrentProgram)
 
 router.route('/get-num-phases').get(workoutController.getNumberofPhases)
+
+router.route('/workout-tutorials').get(workoutController.getWorkoutTutorialData)
 
 module.exports = router

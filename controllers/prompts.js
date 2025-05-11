@@ -30,13 +30,11 @@ Key requirements:
 - ${phaseTarget}
 -Include at least 5 warmup exercises
 - Must have ${workoutsPerWeek} days of workouts
-- Format workout is an example and can be changed for different ${improvements}
 
 
 Constraints:
 - Age: ${age}, Skill level: ${skillLevel}, Equipment: ${availableEquipment}
 - Duration: ${programDuration} weeks, ${workoutsPerWeek} workouts/week, ${timeLimit} mins/workout
-- Focus: ${improvements || 'Provide a suitable focus if unspecified'}
 
 Format:
 {
@@ -61,16 +59,14 @@ Format:
               "5 mins bike for 5 mins",
               "Dynamic lunges, 2x10/leg",
               "Hip flexor stretch, 2x30s/leg",
-              "Single-leg balance with reach, 2x8/leg"
+              "Single-leg balance with reach, 2x8/leg",
+              "Single leg glute bridge, 3x10/leg",
+
             ],
             "main_workout": [
-            /* example lift */
+            (Format include at least 6 exercises)
               "1A Back Squat, 4x8 @ 80-85% 1RM",
-              "1B Romanian Deadlift, 4x6",
-              "2A Bulgarian Split Squat, 4x8/leg",
-              "2B Single leg glute bridge, 3x10/leg",
-              "3A Calf Raises, 4x15",
-              "3B Nordic Hamstring Curls, 3x6"
+
             ],
             "cool_down": [
               "Foam rolling for 10 mins",

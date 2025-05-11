@@ -12,13 +12,6 @@ Dashboard Nav
 
 
 TODO:
-User Buys Tokens (Stripe Flow)
-Create a Stripe checkout session.
-
-On successful payment:
-
-Increase users.token_balance.
-
 Insert a record in transactions (type = 'purchase').
 
 User Uses Tokens for Workouts

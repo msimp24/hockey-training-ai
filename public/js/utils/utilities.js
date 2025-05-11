@@ -3,8 +3,6 @@ export const http =
     ? 'http://localhost:3000/'
     : 'http://68.183.194.171:3000/'
 
-console.log(http)
-
 export async function checkAuth() {
   try {
     const response = await fetch(`${http}auth/check-auth`, {
