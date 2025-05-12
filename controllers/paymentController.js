@@ -137,6 +137,8 @@ const successfulPayment = async (req, res) => {
     console.log(`🆔 Token Amount${tokenAmount}`)
 
     addTokensToUser(userId, tokenAmount)
+
+    addPaymentTransactionInfo(userId, amountPaid, stripePaymentId, tokenAmount)
   }
 
   // Always respond with 200 OK
@@ -149,6 +151,19 @@ const addTokensToUser = (userId, tokenAmount) => {
   db.run(query, [tokenAmount, userId], (err) => {
     if (err) {
       console.error('Failed to update tokens:', err.message)
+    }
+  })
+}
+
+//Create function that tracks invoice info of the user that had paid
+
+const addPaymentTransactionInfo = (userId, amount, stripeId, tokenAmount) => {
+  const query =
+    'INSERT INTO payment_transactions(user_id, stripe_payment_id, amount, token_amount) values ? ? ? ?;'
+
+  db.run(query, [userId, stripeId, amount, tokenAmount], (err) => {
+    if (err) {
+      console.error('Failed to update payment transactions:', err.message)
     }
   })
 }
