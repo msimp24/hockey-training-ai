@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   })
 
+  console.log(http)
   const currentLocation = window.location.pathname
   const authData = await checkAuth()
 
