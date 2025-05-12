@@ -16,6 +16,25 @@ const http =
     : 'http://68.183.194.171:3000/'
 
 document.addEventListener('DOMContentLoaded', async () => {
+  //navbar change active link clicked
+
+  document.querySelectorAll('.nav-link').forEach((link) => {
+    link.addEventListener('click', function () {
+      // Remove 'active' from all links
+      document
+        .querySelectorAll('.nav-link')
+        .forEach((l) => l.classList.remove('active'))
+      // Add 'active' to the clicked one
+      this.classList.add('active')
+    })
+  })
+
+  document.querySelectorAll('.nav-link').forEach((link) => {
+    if (link.getAttribute('href') === window.location.pathname) {
+      link.classList.add('active')
+    }
+  })
+
   const currentLocation = window.location.pathname
   const authData = await checkAuth()
 
@@ -375,25 +394,34 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const data = await fetchData(`${http}workout/workout-tutorials`)
 
+    let numItems = data.length
+    console.log(numItems)
+
     data.forEach((el) => {
       let card = document.createElement('div')
       card.innerHTML = createVideoCard(el.image_url, el.title, el.url)
       videoGrid.append(card)
     })
 
-    tutorialSearch.addEventListener('input', async (e) => {
-      videoGrid.innerHTML = ''
-      const query = tutorialSearch.value.toLowerCase()
+    let debounceTimeout
 
-      const data = await fetchData(
-        `${http}workout/workout-tutorials/?title=${query}`
-      )
+    tutorialSearch.addEventListener('input', (e) => {
+      clearTimeout(debounceTimeout)
 
-      data.forEach((el) => {
-        let card = document.createElement('div')
-        card.innerHTML = createVideoCard(el.image_url, el.title, el.url)
-        videoGrid.append(card)
-      })
+      debounceTimeout = setTimeout(async () => {
+        videoGrid.innerHTML = ''
+        const query = tutorialSearch.value.toLowerCase()
+
+        const data = await fetchData(
+          `${http}workout/workout-tutorials/?title=${query}`
+        )
+
+        data.forEach((el) => {
+          let card = document.createElement('div')
+          card.innerHTML = createVideoCard(el.image_url, el.title, el.url)
+          videoGrid.append(card)
+        })
+      }, 600) // 400ms debounce delay
     })
 
     function createVideoCard(imgUrl, title, videoUrl) {

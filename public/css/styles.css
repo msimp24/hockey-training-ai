@@ -201,6 +201,10 @@ button:focus {
   max-width: 800px;
   width: 100%;
 }
+.nav-link.active {
+  text-decoration: underline;
+  text-underline-offset: 0.5em;
+}
 .dashboard-nav ul {
   display: flex;
   width: 100%;

@@ -238,18 +238,21 @@ const getNumberofPhases = (req, res) => {
 }
 
 const getWorkoutTutorialData = (req, res) => {
-  let { title = '', category = '' } = req.query
+  let { title = '', category = '', page = 1, limit = 6 } = req.query
+  const offset = (page - 1) * limit
 
   title = title.trim().toLowerCase()
   category = category.trim().toLowerCase()
+  console.log(offset)
 
   const query = `
-    SELECT * FROM tutorials
-    WHERE LOWER(title) LIKE '%' || ? || '%'
-      AND LOWER(category) LIKE '%' || ? || '%'
-  `
+  SELECT * FROM tutorials
+  WHERE LOWER(title) LIKE '%' || ? || '%'
+    AND LOWER(category) LIKE '%' || ? || '%'
+  LIMIT ? OFFSET ?
+`
 
-  db.all(query, [title, category], (err, rows) => {
+  db.all(query, [title, category, limit, offset], (err, rows) => {
     if (err) {
       return res.status(500).json({
         status: 'failed',
