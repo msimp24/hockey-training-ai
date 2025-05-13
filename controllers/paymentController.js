@@ -157,7 +157,7 @@ const addTokensToUser = (userId, tokenAmount) => {
 
 const addPaymentTransactionInfo = (userId, amount, stripeId, tokenAmount) => {
   const query =
-    'INSERT INTO payment_transactions(user_id, stripe_payment_id, amount, token_amount) values (? ? ? ?)'
+    'INSERT INTO payment_transactions(user_id, stripe_payment_id, amount, token_amount) values(?, ?, ?, ?)'
 
   db.run(query, [userId, stripeId, amount, tokenAmount], (err) => {
     if (err) {
