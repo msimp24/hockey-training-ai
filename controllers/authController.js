@@ -101,7 +101,11 @@ const registerUser = (req, res) => {
           <div class="container">
             <h2>Hello, ${firstName} ${lastName}</h2>
             <p>Thank you for registering! Please verify your email by clicking the button below:</p>
-            <a href="${currDomain}/auth/verify-email/${verificationToken}" class="btn">Verify Email</a>
+            <a href="${currDomain}/auth/verify-email/${verificationToken}"
+             style="background-color:#4CAF50;color:white;padding:15px 32px;text-align:center;text-decoration:none;display:inline-block;border-radius:4px;font-size:16px;"
+             target="_blank">
+            Verify Email
+            </a>
             <p>If you did not register with us, please ignore this email.</p>
           </div>
           ${currDomain}/auth/verify-email/${verificationToken}
@@ -166,10 +170,7 @@ const verifyEmail = (req, res) => {
                   message: 'Unable to verify email',
                 })
               } else {
-                res.status(200).json({
-                  status: 'success',
-                  message: 'Account has been successfully verified',
-                })
+                return res.redirect('/login')
               }
             }
           )
