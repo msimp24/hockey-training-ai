@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   })
 
-  console.log(http)
   const currentLocation = window.location.pathname
   const authData = await checkAuth()
 
@@ -392,38 +391,64 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (currentLocation === '/dashboard/how-to-videos') {
     const videoGrid = document.querySelector('.video-grid')
     const tutorialSearch = document.querySelector('#tutorial-search')
-
-    const data = await fetchData(`${http}workout/workout-tutorials`)
-
-    let numItems = data.length
-    console.log(numItems)
-
-    data.forEach((el) => {
-      let card = document.createElement('div')
-      card.innerHTML = createVideoCard(el.image_url, el.title, el.url)
-      videoGrid.append(card)
-    })
+    const paginationWrapper = document.querySelector('.pagination-wrapper')
 
     let debounceTimeout
 
-    tutorialSearch.addEventListener('input', (e) => {
+    const LIMIT = 6
+
+    async function loadTutorials(query = '', page = 1) {
+      videoGrid.innerHTML = ''
+      paginationWrapper.innerHTML = ''
+
+      const url = `${http}workout/workout-tutorials/?title=${query}&limit=${LIMIT}&page=${page}`
+
+      const tutorials = await fetchData(url)
+
+      tutorials.data.forEach((el) => {
+        const card = document.createElement('div')
+        card.innerHTML = createVideoCard(el.image_url, el.title, el.url)
+        videoGrid.append(card)
+      })
+
+      createPaginationBtns(tutorials.total, LIMIT, query, page)
+    }
+
+    tutorialSearch.addEventListener('input', () => {
       clearTimeout(debounceTimeout)
-
-      debounceTimeout = setTimeout(async () => {
-        videoGrid.innerHTML = ''
-        const query = tutorialSearch.value.toLowerCase()
-
-        const data = await fetchData(
-          `${http}workout/workout-tutorials/?title=${query}`
-        )
-
-        data.forEach((el) => {
-          let card = document.createElement('div')
-          card.innerHTML = createVideoCard(el.image_url, el.title, el.url)
-          videoGrid.append(card)
-        })
-      }, 600) // 400ms debounce delay
+      debounceTimeout = setTimeout(() => {
+        const query = tutorialSearch.value.trim().toLowerCase()
+        loadTutorials(query)
+      }, 600)
     })
+    loadTutorials()
+
+    function createPaginationBtns(
+      totalItems,
+      limit,
+      query = '',
+      currentPage = 1
+    ) {
+      const pageCount = Math.ceil(totalItems / limit)
+      paginationWrapper.innerHTML = '' // Clear old buttons
+
+      for (let i = 0; i < pageCount; i++) {
+        const pageNum = i + 1
+        const btn = document.createElement('div')
+        btn.classList.add('pagination-button')
+        btn.textContent = pageNum
+
+        if (pageNum === currentPage) {
+          btn.classList.add('active')
+        }
+
+        btn.addEventListener('click', () => {
+          loadTutorials(query, pageNum)
+        })
+
+        paginationWrapper.append(btn)
+      }
+    }
 
     function createVideoCard(imgUrl, title, videoUrl) {
       let html = `

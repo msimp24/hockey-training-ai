@@ -2,8 +2,6 @@ const db = require('../config/db')
 require('dotenv').config()
 const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
 
-console.log(process.env.SERVER_URL)
-
 const createCheckoutSession = async (req, res) => {
   const id = req.body.id
   const userId = req.body.userId
@@ -159,7 +157,7 @@ const addTokensToUser = (userId, tokenAmount) => {
 
 const addPaymentTransactionInfo = (userId, amount, stripeId, tokenAmount) => {
   const query =
-    'INSERT INTO payment_transactions(user_id, stripe_payment_id, amount, token_amount) values ? ? ? ?;'
+    'INSERT INTO payment_transactions(user_id, stripe_payment_id, amount, token_amount) values (? ? ? ?)'
 
   db.run(query, [userId, stripeId, amount, tokenAmount], (err) => {
     if (err) {

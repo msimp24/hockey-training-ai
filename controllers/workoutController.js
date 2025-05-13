@@ -243,26 +243,46 @@ const getWorkoutTutorialData = (req, res) => {
 
   title = title.trim().toLowerCase()
   category = category.trim().toLowerCase()
-  console.log(offset)
 
-  const query = `
-  SELECT * FROM tutorials
-  WHERE LOWER(title) LIKE '%' || ? || '%'
-    AND LOWER(category) LIKE '%' || ? || '%'
-  LIMIT ? OFFSET ?
+  const countQuery = `
+SELECT COUNT(*) AS total FROM tutorials
+WHERE LOWER(title) LIKE ? || '%'
+  AND LOWER(category) LIKE ? || '%'
 `
 
-  db.all(query, [title, category, limit, offset], (err, rows) => {
+  const query = `
+SELECT * FROM tutorials
+WHERE LOWER(title) LIKE ? || '%'
+AND LOWER(category) LIKE ? || '%'
+LIMIT ? OFFSET ?
+
+`
+  db.get(countQuery, [title, category], (err, countResult) => {
     if (err) {
       return res.status(500).json({
         status: 'failed',
         message: 'Internal service error',
       })
-    } else {
-      return res.status(200).json(rows)
     }
+    db.all(query, [title, category, limit, offset], (err, rows) => {
+      if (err) {
+        return res.status(500).json({
+          status: 'failed',
+          message: 'Internal service error',
+        })
+      } else {
+        return res.status(200).json({
+          total: countResult.total,
+          page: Number(page),
+          limit: Number(limit),
+          count: rows.length,
+          data: rows,
+        })
+      }
+    })
   })
 }
+
 module.exports = {
   generateWorkout,
   getAllWorkouts,
