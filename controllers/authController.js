@@ -7,6 +7,7 @@ const nodemailer = require('nodemailer')
 const mg = require('nodemailer-mailgun-transport')
 
 const currDomain = process.env.dev_url
+const prodDomain = process.env.prod_url
 
 const generateToken = (userId) => {
   return jwt.sign({ userId }, process.env.SECRET_KEY, { expiresIn: '2hr' })
@@ -63,52 +64,18 @@ const registerUser = (req, res) => {
               html: `
       <!DOCTYPE html>
       <html>
-        <head>
-          <style>
-            body {
-              font-family: Arial, sans-serif;
-              background-color: #f4f4f4;
-              margin: 0;
-              padding: 0;
-            }
-            .container {
-              width: 100%;
-              max-width: 600px;
-              margin: 0 auto;
-              background-color: #ffffff;
-              padding: 20px;
-              border-radius: 8px;
-              text-align: center;
-            }
-            .btn {
-              background-color: #4CAF50; /* Green button */
-              color: white;
-              padding: 15px 32px;
-              text-align: center;
-              text-decoration: none;
-              display: inline-block;
-              border-radius: 4px;
-              font-size: 16px;
-              cursor:pointer;
-            }
-            .btn:hover {
-              background-color: #45a049;
-              cursor:pointer;
-            }
-          </style>
-        </head>
         <body>
           <div class="container">
             <h2>Hello, ${firstName} ${lastName}</h2>
             <p>Thank you for registering! Please verify your email by clicking the button below:</p>
-            <a href="${currDomain}/auth/verify-email/${verificationToken}"
+            <a href="${prodDomain}/auth/verify-email/${verificationToken}"
              style="background-color:#4CAF50;color:white;padding:15px 32px;text-align:center;text-decoration:none;display:inline-block;border-radius:4px;font-size:16px;"
              target="_blank">
             Verify Email
             </a>
             <p>If you did not register with us, please ignore this email.</p>
           </div>
-          ${currDomain}/auth/verify-email/${verificationToken}
+          ${prodDomain}/auth/verify-email/${verificationToken}
         </body>
       </html>
     `,
