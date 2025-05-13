@@ -53,6 +53,8 @@ const postRegisterData = async (data, url) => {
       )
     } else {
       // Redirect to login if registration is successful
+      document.querySelector('.confirmation-email-banner').style.display =
+        'flex'
       window.location.href = '/login'
     }
   } catch (error) {

@@ -210,6 +210,17 @@ button:focus {
   animation: spin 2s linear infinite;
 }
 
+.confirmation-email-banner {
+  width: 95%;
+  background-color: var(--accent-color);
+  font-size: var(--font-size-lg);
+  display: none;
+  align-items: center;
+  color: var(--primary-light);
+  padding: 20px;
+  justify-content: center;
+}
+
 @media (width < 900px) {
   .left-side {
     display: none;
@@ -234,5 +245,8 @@ button:focus {
   .input-box label {
     font-size: var(--font-size-xs);
     color: var(--primary-light);
+  }
+  .confirmation-email-banner {
+    font-size: var(--font-size-md);
   }
 }
