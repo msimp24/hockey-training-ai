@@ -68,7 +68,9 @@ const registerUser = (req, res) => {
             style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
              Verify Email
              </a>
-            <p>If you did not register with us, please ignore this email.</p>
+            <p>If the button doesn't work, copy and paste this link into your browser:</p>
+            <p>${process.env.FRONTEND_URL}/auth/verify-email/${verificationToken}</p>
+
           </div>
           ${process.env.FRONTEND_URL}/auth/verify-email/${verificationToken}
     `,
