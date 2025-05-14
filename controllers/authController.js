@@ -64,9 +64,10 @@ const registerUser = (req, res) => {
           <div class="container">
             <h2>Hello, ${firstName} ${lastName}</h2>
             <p>Thank you for registering! Please verify your email by clicking the button below:</p>
-            <a href="${process.env.FRONTEND_URL}/auth/verify-email/${verificationToken}"
-             target="_blank">
-            </a>
+            <a href="${process.env.FRONTEND_URL}/auth/verify-email/${verificationToken}" target="_blank"
+            style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
+             Verify Email
+             </a>
             <p>If you did not register with us, please ignore this email.</p>
           </div>
           ${process.env.FRONTEND_URL}/auth/verify-email/${verificationToken}
