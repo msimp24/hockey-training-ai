@@ -64,9 +64,6 @@ const registerUser = (req, res) => {
               to: `${firstName} ${lastName} <${email}>`,
               subject: 'Email Confirmation',
               html: `
-      <!DOCTYPE html>
-      <html>
-        <body>
           <div class="container">
             <h2>Hello, ${firstName} ${lastName}</h2>
             <p>Thank you for registering! Please verify your email by clicking the button below:</p>
@@ -78,8 +75,6 @@ const registerUser = (req, res) => {
             <p>If you did not register with us, please ignore this email.</p>
           </div>
           ${prodDomain}/auth/verify-email/${verificationToken}
-        </body>
-      </html>
     `,
             },
             (err, info) => {
