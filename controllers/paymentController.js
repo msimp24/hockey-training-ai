@@ -134,9 +134,17 @@ const successfulPayment = async (req, res) => {
     console.log(`💵 User Id: $${userId}`)
     console.log(`🆔 Token Amount${tokenAmount}`)
 
-    addTokensToUser(userId, tokenAmount)
-
-    addPaymentTransactionInfo(userId, amountPaid, stripePaymentId, tokenAmount)
+    try {
+      addTokensToUser(userId, tokenAmount)
+      addPaymentTransactionInfo(
+        userId,
+        amountPaid,
+        stripePaymentId,
+        tokenAmount
+      )
+    } catch (err) {
+      console.error('Unexpected DB error:', err)
+    }
   }
 
   // Always respond with 200 OK
