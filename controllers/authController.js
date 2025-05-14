@@ -8,8 +8,6 @@ const mg = require('nodemailer-mailgun-transport')
 
 const currDomain = process.env.dev_url
 
-console.log(prodDomain)
-
 const generateToken = (userId) => {
   return jwt.sign({ userId }, process.env.SECRET_KEY, { expiresIn: '2hr' })
 }
