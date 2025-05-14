@@ -30,6 +30,7 @@ Key requirements:
 - ${phaseTarget}
 -Include at least 5 warmup exercises
 - Must have ${workoutsPerWeek} days of workouts
+- Workout is based on ${improvements}
 
 
 Constraints:
