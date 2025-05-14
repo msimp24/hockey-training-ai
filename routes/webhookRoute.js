@@ -13,7 +13,7 @@ router
   .route('/tester')
   .get(
     express.raw({ type: 'application/json' }),
-    paymentController.testBodyParser
+    paymentController.successfulPayment
   )
 
 module.exports = router
