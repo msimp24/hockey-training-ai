@@ -172,7 +172,7 @@ const loginUser = (req, res) => {
 
           res.cookie('token', token, {
             httpOnly: true,
-            secure: true, // Use only with HTTPS
+            secure: false, // Use only with HTTPS
             sameSite: 'None', // Protects against CSRF attacks
             maxAge: 60 * 60 * 2000, // 1 hour expiry
           })
