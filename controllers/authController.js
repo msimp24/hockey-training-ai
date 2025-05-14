@@ -7,7 +7,6 @@ const nodemailer = require('nodemailer')
 const mg = require('nodemailer-mailgun-transport')
 
 const currDomain = process.env.dev_url
-const prodDomain = process.env.SERVER_URL
 
 console.log(prodDomain)
 
@@ -67,14 +66,14 @@ const registerUser = (req, res) => {
           <div class="container">
             <h2>Hello, ${firstName} ${lastName}</h2>
             <p>Thank you for registering! Please verify your email by clicking the button below:</p>
-            <a href="${prodDomain}/auth/verify-email/${verificationToken}"
+            <a href="${process.env.FRONTEND_URL}/auth/verify-email/${verificationToken}"
              style="background-color:#4CAF50;color:white;padding:15px 32px;text-align:center;text-decoration:none;display:inline-block;border-radius:4px;font-size:16px;"
              target="_blank">
             Verify Email
             </a>
             <p>If you did not register with us, please ignore this email.</p>
           </div>
-          ${prodDomain}/auth/verify-email/${verificationToken}
+          ${process.env.FRONTEND_URL}/auth/verify-email/${verificationToken}
     `,
             },
             (err, info) => {
@@ -175,9 +174,9 @@ const loginUser = (req, res) => {
 
           res.cookie('token', token, {
             httpOnly: true,
-            secure: false, // Use only with HTTPS
-            sameSite: 'Strict', // Protects against CSRF attacks
-            maxAge: 60 * 60 * 1000, // 1 hour expiry
+            secure: true, // Use only with HTTPS
+            sameSite: 'None', // Protects against CSRF attacks
+            maxAge: 60 * 60 * 2000, // 1 hour expiry
           })
           res
             .status(200)
