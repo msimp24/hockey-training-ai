@@ -1,7 +1,7 @@
 export const http =
   window.location.hostname === 'localhost'
     ? 'http://localhost:3000/'
-    : 'http://68.183.194.171:3000/'
+    : 'https://hockey-training-ai.com'
 
 export async function checkAuth() {
   try {
