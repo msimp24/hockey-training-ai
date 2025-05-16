@@ -70,9 +70,7 @@ const registerUser = (req, res) => {
              </a>
             <p>If the button doesn't work, copy and paste this link into your browser:</p>
             <p>${process.env.FRONTEND_URL}/auth/verify-email/${verificationToken}</p>
-
           </div>
-          ${process.env.FRONTEND_URL}/auth/verify-email/${verificationToken}
     `,
             },
             (err, info) => {
@@ -173,8 +171,8 @@ const loginUser = (req, res) => {
 
           res.cookie('token', token, {
             httpOnly: true,
-            secure: false, // Use only with HTTPS
-            sameSite: 'Strict', // Protects against CSRF attacks
+            secure: true, // Use only with HTTPS
+            sameSite: 'None', // Protects against CSRF attacks
             maxAge: 60 * 60 * 2000, // 1 hour expiry
           })
           res
