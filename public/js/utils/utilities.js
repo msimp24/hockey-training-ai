@@ -4,6 +4,7 @@ export const http =
     : 'https://hockey-training-ai.com'
 
 export async function checkAuth() {
+  console.log(http)
   try {
     const response = await fetch(`${http}auth/check-auth`, {
       credentials: 'include',
