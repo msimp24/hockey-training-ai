@@ -8,7 +8,7 @@ registerLoginBtn.addEventListener('click', () => {
 const http =
   window.location.hostname === 'localhost'
     ? 'http://localhost:3000/'
-    : 'https://hockey-training-ai.com'
+    : 'https://hockey-training-ai.com/'
 
 //selectors for regstration button and form
 const registerSubmitBtn = document.getElementById('register-btn')

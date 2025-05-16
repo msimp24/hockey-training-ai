@@ -13,7 +13,7 @@ import {
 const http =
   window.location.hostname === 'localhost'
     ? 'http://localhost:3000/'
-    : 'https://hockey-training-ai.com'
+    : 'https://hockey-training-ai.com/'
 
 document.addEventListener('DOMContentLoaded', async () => {
   //navbar change active link clicked

@@ -3,7 +3,7 @@ import { checkAuth } from './utils/utilities.js'
 const http =
   window.location.hostname === 'localhost'
     ? 'http://localhost:3000/'
-    : 'https://hockey-training-ai.com'
+    : 'https://hockey-training-ai.com/'
 
 window.onload = async () => {
   const authData = await checkAuth()
