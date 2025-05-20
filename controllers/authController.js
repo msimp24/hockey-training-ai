@@ -141,8 +141,10 @@ const verifyEmail = (req, res) => {
 }
 
 const loginUser = (req, res) => {
-  const email = req.body.email
+  const email = req.body.email.toLowerCase()
   const password = req.body.password
+
+  console.log(email)
 
   db.get('SELECT * FROM users where email = ?', [email], (err, user) => {
     if (err) {
