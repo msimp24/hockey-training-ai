@@ -8,7 +8,7 @@ const { Resend } = require('resend')
 
 const currDomain = process.env.dev_url
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = new Resend(process.env.MAIL_KEY)
 
 const generateToken = (userId) => {
   return jwt.sign({ userId }, process.env.SECRET_KEY, { expiresIn: '2hr' })
