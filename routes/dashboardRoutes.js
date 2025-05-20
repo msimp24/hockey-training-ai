@@ -24,7 +24,9 @@ router.route('/buy-tokens').get((req, res) => {
   res.render('dashboard-layout', { page: 'dashboard/buy-tokens' })
 })
 router.route('/profile').get((req, res) => {
-  res.render('dashboard-layout', { page: 'dashboard/profile' })
+  res.render('dashboard-layout', { page: 'dashboard/profile-layout' })
 })
+
+//dashboard profile routes
 
 module.exports = router

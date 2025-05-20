@@ -12,6 +12,8 @@ async function getWorkoutFromPrompt(userData, apiKey) {
     improvements,
   } = userData
 
+  console.log(improvements)
+
   let repeat = 0
   let phaseTarget = ''
   let tokenCost = 0
@@ -31,6 +33,7 @@ Key requirements:
 -Include at least 5 warmup exercises
 - Must have ${workoutsPerWeek} days of workouts
 - Workout is based on ${improvements}
+
 
 
 Constraints:

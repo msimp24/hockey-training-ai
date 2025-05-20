@@ -3,30 +3,21 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const db = require('../config/db')
 const crypto = require('crypto')
-const nodemailer = require('nodemailer')
-const mg = require('nodemailer-mailgun-transport')
+
+const { Resend } = require('resend')
 
 const currDomain = process.env.dev_url
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 const generateToken = (userId) => {
   return jwt.sign({ userId }, process.env.SECRET_KEY, { expiresIn: '2hr' })
 }
 
-const mailgunAuth = {
-  auth: {
-    apiKey: process.env.MAIL_KEY,
-    domain: 'sandbox53a2b5503c5043c7affab1c79415d821.mailgun.org',
-  },
-}
-const smtpTransport = nodemailer.createTransport(mg(mailgunAuth))
-
 const registerUser = (req, res) => {
-  const email = req.body.email
-  const password = req.body.password
-  const firstName = req.body.firstName
-  const lastName = req.body.lastName
+  const { email, password, firstName, lastName } = req.body
 
-  db.get('SELECT * FROM users where email = ?', [email], (err, row) => {
+  db.get('SELECT * FROM users WHERE email = ?', [email], (err, row) => {
     if (err) {
       console.error('Database error:', err)
       return res.status(500).json({
@@ -34,6 +25,7 @@ const registerUser = (req, res) => {
         message: 'Internal service error',
       })
     }
+
     if (row) {
       return res.status(400).json({
         status: 'Failed',
@@ -42,54 +34,53 @@ const registerUser = (req, res) => {
     }
 
     const hash = bcrypt.hashSync(password, 10)
-
     const verificationToken = crypto.randomBytes(32).toString('hex')
 
     db.run(
-      'INSERT INTO USERS(firstName, lastName, email, password, verification_token) values (?, ?, ?, ?, ?)',
+      'INSERT INTO users (firstName, lastName, email, password, verification_token) VALUES (?, ?, ?, ?, ?)',
       [firstName, lastName, email, hash, verificationToken],
       (err) => {
         if (err) {
+          console.error('Insert error:', err)
           return res.status(500).json({
             status: 'Failed',
             message: 'User not added to database',
           })
-        } else {
-          smtpTransport.sendMail(
-            {
-              from: `no-reply <${process.env.MAIL_EMAIL}>`,
-              to: `${firstName} ${lastName} <${email}>`,
-              subject: 'Email Confirmation',
-              html: `
-          <div class="container">
+        }
+
+        const htmlContent = `
+          <div style="font-family: sans-serif;">
             <h2>Hello, ${firstName} ${lastName}</h2>
             <p>Thank you for registering! Please verify your email by clicking the button below:</p>
             <a href="${process.env.FRONTEND_URL}/auth/verify-email/${verificationToken}" target="_blank"
-            style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
-             Verify Email
-             </a>
+              style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
+              Verify Email
+            </a>
             <p>If the button doesn't work, copy and paste this link into your browser:</p>
             <p>${process.env.FRONTEND_URL}/auth/verify-email/${verificationToken}</p>
           </div>
-    `,
-            },
-            (err, info) => {
-              if (err) {
-                console.error('Mailgun Error:', err)
-                return res.status(500).json({
-                  status: 'Failed',
-                  message: 'Error sending verification email',
-                })
-              } else {
-                console.log('Email Sent:', info)
-                return res.status(200).json({
-                  status: 'Success',
-                  message: 'Account created and email sent for verification',
-                })
-              }
-            }
-          )
-        }
+        `
+
+        resend.emails
+          .send({
+            from: `YourApp <noreply@${process.env.MAIL_DOMAIN}>`,
+            to: `${email}`,
+            subject: 'Email Confirmation',
+            html: htmlContent,
+          })
+          .then(() => {
+            return res.status(200).json({
+              status: 'Success',
+              message: 'Account created and verification email sent',
+            })
+          })
+          .catch((err) => {
+            console.error('Resend Email Error:', err)
+            return res.status(500).json({
+              status: 'Failed',
+              message: 'User created, but failed to send verification email',
+            })
+          })
       }
     )
   })
