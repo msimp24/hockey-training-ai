@@ -12,15 +12,10 @@ Dashboard Nav
 
 
 TODO:
+Set current workout to the user how is currently logged in
+
 Insert a record in transactions (type = 'purchase').
-
-User Uses Tokens for Workouts
-Check if users.token_balance >= workout cost.
-
-Deduct the required tokens.
 
 Insert a workout record.
 
 Insert a transaction (type = 'workout_usage').
-
-when making app secure, fix login function on both the frontend and the backend

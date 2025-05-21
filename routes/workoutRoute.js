@@ -20,7 +20,7 @@ router
   .get(authenticate.protectRoute, workoutController.getCurrentProgram)
 
 router
-  .route('/set-current-workout/:workoutId')
+  .route('/set-current-workout/:workoutId/:userId')
   .put(workoutController.setCurrentProgram)
 
 router.route('/get-num-phases').get(workoutController.getNumberofPhases)

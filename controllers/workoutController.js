@@ -184,10 +184,11 @@ const getCurrentProgram = (req, res) => {
 
 const setCurrentProgram = (req, res) => {
   const workoutId = req.params.workoutId
+  const userId = req.params.userId
 
-  const updateQuery = 'UPDATE workouts set isCurrent = 0'
+  const updateQuery = 'UPDATE workouts set isCurrent = 0 where userId = (?)'
 
-  db.run(updateQuery, (err) => {
+  db.run(updateQuery, [userId], (err) => {
     if (err) {
       return res.status(500).json({
         status: 'failed',
@@ -196,9 +197,9 @@ const setCurrentProgram = (req, res) => {
     }
 
     const setCurrentQuery =
-      'UPDATE workouts set isCurrent = 1 where workoutId = (?)'
+      'UPDATE workouts set isCurrent = 1 where workoutId = (?) and userId = (?)'
 
-    db.run(setCurrentQuery, [workoutId], (err) => {
+    db.run(setCurrentQuery, [workoutId, userId], (err) => {
       if (err) {
         return res.status(500).json({
           status: 'failed',

@@ -316,11 +316,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       card.innerHTML = createAllWorkoutsCard(el)
       allWorkoutsGrid.append(card)
     })
-
     document.querySelectorAll('button[data-id]').forEach((button) => {
       button.addEventListener('click', () => {
         const workoutId = button.dataset.id
-        setCurrentWorkout(workoutId)
+        //add user id to set the current workout of the user that is currently logged in
+        setCurrentWorkout(workoutId, userData.id)
       })
     })
   }
@@ -709,10 +709,10 @@ const createAllWorkoutsCard = (workout) => {
   return card
 }
 
-const setCurrentWorkout = async (workoutId) => {
+const setCurrentWorkout = async (workoutId, userId) => {
   try {
     const response = await fetch(
-      `${http}workout/set-current-workout/${workoutId}`,
+      `${http}workout/set-current-workout/${workoutId}/${userId}`,
       {
         method: 'PUT',
         credentials: 'include',
