@@ -44,8 +44,8 @@ Format:
 {
   "program": {
     "duration": "${programDuration} weeks (repeat ${
-    programDuration / repeat
-  } times)",
+      programDuration / repeat
+    } times)",
     "focus": [${improvements}],
     "workoutsPerWeek": ${workoutsPerWeek},
     "durationPerWorkout": "${timeLimit} mins",
@@ -70,6 +70,7 @@ Format:
             "main_workout": [
             (Format include at least 6 exercises)
               "1A Back Squat, 4x8 @ 80-85% 1RM",
+              "1B Box Jumps, 4x6
 
             ],
             "cool_down": [
