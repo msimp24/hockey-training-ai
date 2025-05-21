@@ -12,8 +12,6 @@ async function getWorkoutFromPrompt(userData, apiKey) {
     improvements,
   } = userData
 
-  console.log(improvements)
-
   let repeat = 0
   let phaseTarget = ''
   let tokenCost = 0

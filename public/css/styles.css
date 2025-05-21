@@ -943,6 +943,35 @@ Profile page styles
   padding: 20px;
 }
 .profile-nav {
+  margin: 20px 0;
+}
+
+.profile-nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.profile-nav ul li {
+  list-style-type: none;
+}
+.profile-nav ul li a {
+  text-decoration: none;
+  color: var(--primary-dark);
+  font-size: var(--font-size-sm);
+}
+.profile-nav ul li a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+.profile-nav ul li a.active {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.profile-hr {
+  color: var(--primary-dark);
+  width: 80%;
+  margin-top: 20px;
 }
 
 @media (width < 1000px) {

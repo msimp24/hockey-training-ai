@@ -80,9 +80,9 @@ const generateWorkout = async (req, res) => {
                 } else {
                   //update user token count
 
-                  let query = `update users set tokens = tokens - (?)`
+                  let query = `update users set tokens = tokens - (?) where id = (?)`
 
-                  db.run(query, [tokenCost], (err) => {
+                  db.run(query, [tokenCost, userId], (err) => {
                     if (err) {
                       console.log('Error updating the user token count')
                     } else {

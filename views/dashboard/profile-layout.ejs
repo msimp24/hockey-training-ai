@@ -1,31 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-</head>
-<body>
-  <div class="prof-container">
-    <div class="row">
-      <div class="profile-left-side">
-        <h1 id="logged-in-user">Welcome, Mark</h1>
-        <p id="logged-in-email">mark.simpson4@gmail.com</p>
-        <nav class="profile-nav">
-          <ul>
-            <li><a href="/dashboard/profile/edit-account">Edit Account</a></li>
-            <li><a href="/dashboard/profile/token-transactions">Token Transactions</a></li>
-            <li><a href="/dashboard/profile/payment-transactions">Payment Transactions</a></li>
-            <li><a href="/" id="profile-log-out">Sign Out</a></li>
-          </ul>
-        </nav>
-        <div class="profile-content"></div>
-      </div>
-      <div class="profile-right-side">
-        <h1>hello</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="prof-container">
+      <div class="row">
+        <div class="profile-left-side">
+          <h1 id="profile-user"></h1>
+          <p id="profile-email"></p>
+          <hr class="profile-hr" />
+          <nav class="profile-nav">
+            <ul>
+              <li>
+                <a href="/dashboard/profile/edit-account">Edit Account</a>
+              </li>
+              <li>
+                <a href="/dashboard/profile/token-transactions"
+                  >Token Transactions</a
+                >
+              </li>
+              <li>
+                <a href="/dashboard/profile/payment-transactions"
+                  >Payment Transactions</a
+                >
+              </li>
+              <li><a href="/" id="profile-logout">Sign Out</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="profile-right-side"><%- include(subPage) %></div>
       </div>
     </div>
-  </div>
-  
-</body>
+
+    <script type="module" src="/js/profile.js"></script>
+  </body>
 </html>

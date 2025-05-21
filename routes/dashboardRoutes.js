@@ -23,10 +23,37 @@ router.route('/how-to-videos').get((req, res) => {
 router.route('/buy-tokens').get((req, res) => {
   res.render('dashboard-layout', { page: 'dashboard/buy-tokens' })
 })
+
+//profile routes
+
+// Profile layout shell
 router.route('/profile').get((req, res) => {
-  res.render('dashboard-layout', { page: 'dashboard/profile-layout' })
+  res.render('dashboard-layout', {
+    page: 'dashboard/profile-layout',
+    subPage: 'profile/edit-account',
+  })
 })
 
-//dashboard profile routes
+// Edit account page
+router.route('/profile/edit-account').get((req, res) => {
+  res.render('dashboard-layout', {
+    page: 'dashboard/profile-layout',
+    subPage: 'profile/edit-account',
+  })
+})
+
+router.route('/profile/token-transactions').get((req, res) => {
+  res.render('dashboard-layout', {
+    page: 'dashboard/profile-layout',
+    subPage: 'profile/token-transactions',
+  })
+})
+
+router.route('/profile/payment-transactions').get((req, res) => {
+  res.render('dashboard-layout', {
+    page: 'dashboard/profile-layout',
+    subPage: 'profile/payment-transactions',
+  })
+})
 
 module.exports = router
