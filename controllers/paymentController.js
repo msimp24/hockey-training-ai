@@ -42,8 +42,8 @@ const createCheckoutSession = async (req, res) => {
                 quantity: 1,
               },
             ],
-            success_url: `http://68.183.194.171:3000/dashboard/create-workout`,
-            cancel_url: `http://68.183.194.171:3000/dashboard/buy-tokens`,
+            success_url: `https://hockey-training-ai.com/dashboard/create-workout`,
+            cancel_url: `https://hockey-training-ai.com/dashboard/buy-tokens`,
             metadata: {
               userId: userId,
               tokenAmount: item.token_amount,

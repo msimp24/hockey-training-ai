@@ -54,6 +54,7 @@ const postRegisterData = async (data, url) => {
       )
     } else {
       // Redirect to login if registration is successful
+      alert('Confirmation email sent')
       window.location.href = '/login'
     }
   } catch (error) {
