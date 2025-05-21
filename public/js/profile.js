@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const authData = await checkAuth()
 
   const userData = await fetchUserData(authData.userId)
-  profileUser.textContent = `Welcome, ${userData.firstName}`
+  profileUser.textContent = `Welcome, ${userData.firstName} ${userData.lastName}`
   profileEmail.textContent = `${userData.email}`
 
   profileLogOut.addEventListener('click', () => {
@@ -37,5 +37,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   //handles edit account page
   if (window.location.pathname === '/dashboard/profile/edit-account') {
+    const editFirstName = document.querySelector('#edit-first-name')
+    const editLastName = document.querySelector('#edit-last-name')
+
+    editFirstName.value = userData.firstName
+    editLastName.value = userData.lastName
   }
 })

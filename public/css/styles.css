@@ -932,6 +932,7 @@ Profile page styles
   background-color: var(--primary-light);
   border-radius: var(--btn-border-radius);
   box-shadow: var(--btn-shadow);
+  border-top: 6px solid var(--accent-color);
 }
 
 .profile-left-side {
@@ -972,6 +973,45 @@ Profile page styles
   color: var(--primary-dark);
   width: 80%;
   margin-top: 20px;
+}
+
+.prof-row {
+  display: flex;
+}
+
+.edit-account-form {
+  border: solid 1px var(--primary-dark);
+  padding: 20px;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  justify-content: center;
+}
+.edit-account-form input {
+  width: 100%;
+  padding: 6px;
+  font-size: var(--font-size-sm);
+}
+
+@media (width < 768px) {
+  .prof-row {
+    flex-direction: column;
+  }
+  .edit-account-form input {
+    max-width: 500px;
+    padding: 4px;
+    font-size: var(--font-size-xs);
+  }
+  .edit-account-form {
+    align-items: center;
+    width: 80%;
+  }
+  .profile-right-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 @media (width < 1000px) {
