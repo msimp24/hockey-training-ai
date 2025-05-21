@@ -33,8 +33,6 @@ Key requirements:
 -Include at least 5 warmup exercises
 - Must have ${workoutsPerWeek} days of workouts
 - Workout is based on ${improvements}
-- Include superset formatting, ex: 1A, 1B, 2A, 2B, 3A, 3B
-- Must have 6 exercises for the main lift
 
 
 
@@ -70,6 +68,10 @@ Format:
 
             ],
             "main_workout": [
+            (Format include at least 6 exercises)
+              "1A Back Squat, 4x8 @ 80-85% 1RM",
+              "1B Box Jumps, 4X6
+
             ],
             "cool_down": [
               "Foam rolling for 10 mins",

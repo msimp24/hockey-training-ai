@@ -84,26 +84,6 @@ h2 {
   width: 100%;
 }
 
-.prof-container {
-  max-width: 1200px;
-  width: 90%;
-  margin: 0 auto;
-  background-color: var(--primary-light);
-  border-radius: var(--btn-border-radius);
-  box-shadow: var(--btn-shadow);
-}
-
-.profile-left-side {
-  width: 50%;
-  padding: 20px;
-}
-.profile-right-side {
-  width: 100%;
-  padding: 20px;
-}
-.profile-nav {
-}
-
 .login-btn {
   background-color: var(--primary-light);
   color: var(--accent-color);
@@ -453,7 +433,9 @@ button:focus {
   display: none;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  transition:
+    opacity 0.3s ease-in-out,
+    visibility 0.3s ease-in-out;
 }
 .close-modal-btn {
   position: absolute;
@@ -937,6 +919,30 @@ how to videos page
 .pagination-button:hover {
   color: var(--primary-dark);
   background: var(--primary-light);
+}
+
+/* 
+Profile page styles
+*/
+
+.prof-container {
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
+  background-color: var(--primary-light);
+  border-radius: var(--btn-border-radius);
+  box-shadow: var(--btn-shadow);
+}
+
+.profile-left-side {
+  width: 50%;
+  padding: 20px;
+}
+.profile-right-side {
+  width: 100%;
+  padding: 20px;
+}
+.profile-nav {
 }
 
 @media (width < 1000px) {
