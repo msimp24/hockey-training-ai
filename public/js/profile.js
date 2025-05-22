@@ -78,7 +78,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (isValid) {
         data.userId = userData.id
-        alert(JSON.stringify(data))
 
         try {
           const response = await fetch(`${http}user/update-names`, {
