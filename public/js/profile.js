@@ -63,7 +63,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         isValid = false
       } else {
         firstNameErr.textContent = ''
-        isValid = true
         data.firstName = editFirstName.value
       }
 
@@ -72,7 +71,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         isValid = false
       } else {
         lastNameErr.textContent = ''
-        isValid = true
         data.lastName = editLastName.value
       }
 
