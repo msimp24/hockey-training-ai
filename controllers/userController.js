@@ -27,9 +27,18 @@ const getUserById = (req, res) => {
 const getTokenTransactionByUser = (req, res) => {
   const userId = req.params.id
 
-  let query = 'SELECT * from token_transactions where user_id = (?)'
+  let query = `SELECT 
+  a.workoutId, 
+  a.programName, 
+  a.created_at, 
+  b.user_id, 
+  b.amount 
+FROM workouts a
+JOIN token_transactions b ON a.workoutId = b.workoutId
+WHERE b.user_id = ?
+`
 
-  db.get(query, [userId], (err, row) => {
+  db.all(query, [userId], (err, row) => {
     if (err) {
       return res.status(500).json({
         status: 'Failed',

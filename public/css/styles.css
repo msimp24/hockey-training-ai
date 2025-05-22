@@ -997,6 +997,30 @@ Profile page styles
   background-color: rgb(241, 240, 240);
   border: 1px solid var(--primary-dark);
 }
+
+/*
+Token transactions page
+*/
+
+.token-transaction-container {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.token-trans-wrapper {
+  border: 1px solid var(--primary-dark);
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+}
+.token-trans-wrapper div p {
+  font-size: 14px;
+}
+.token-trans-wrapper .bolded {
+  font-weight: 700;
+}
+
 @media (width < 768px) {
   .prof-row {
     flex-direction: column;
@@ -1007,13 +1031,8 @@ Profile page styles
     font-size: var(--font-size-xs);
   }
   .edit-account-form {
-    align-items: center;
-    width: 80%;
   }
   .profile-right-side {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
   }
 }
 

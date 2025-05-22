@@ -5,6 +5,9 @@ const userController = require('../controllers/userController')
 router.route('/:id').get(userController.getUserById)
 
 //user token transactions
+router
+  .route('/token-transactions/:id')
+  .get(userController.getTokenTransactionByUser)
 
 //user purchase transactions
 

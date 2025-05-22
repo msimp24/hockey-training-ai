@@ -1,4 +1,9 @@
-import { logout, checkAuth, fetchUserData } from './utils/utilities.js'
+import {
+  logout,
+  checkAuth,
+  fetchUserData,
+  fetchData,
+} from './utils/utilities.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
   const http =
@@ -100,6 +105,38 @@ document.addEventListener('DOMContentLoaded', async () => {
           console.err(err)
         }
       }
+    })
+  }
+
+  if (window.location.pathname === '/dashboard/profile/token-transactions') {
+    const tokenTransactions = await fetchData(
+      `${http}user/token-transactions/${userData.id}`
+    )
+    console.log(tokenTransactions)
+
+    const tokenContainer = document.querySelector(
+      '.token-transaction-container'
+    )
+
+    tokenTransactions.forEach((transaction) => {
+      let wrapper = document.createElement('div')
+      wrapper.innerHTML = `  
+      <div class="token-trans-wrapper">
+        <div>
+          <p>Program Name:</p>
+          <p class="bolded" data-id=${transaction.workoutId}>${transaction.programName}</p>
+        </div>
+        <div>
+          <p>Token Cost:</p>
+          <p class="bolded">${transaction.amount}</p>
+        </div>
+        <div>
+          <p>Created At:</p>
+          <p class="bolded">${transaction.created_at}</p>
+        </div>
+      </div>`
+
+      tokenContainer.append(wrapper)
     })
   }
 })

@@ -60,37 +60,25 @@ const generateWorkout = async (req, res) => {
           console.error('Error inserting workout:', err.message)
           return res.status(500).send(err)
         } else {
-          let query = `SELECT workoutId 
-            FROM workouts 
-            WHERE userId = (?)
-            order by workoutId limit 1`
+          const workoutId = this.lastID // ✅ get the actual inserted workout ID
 
-          db.get(query, [userId], (err, row) => {
+          let query =
+            'INSERT INTO token_transactions(user_id, amount, workoutId) values (?, ?, ?)'
+
+          db.run(query, [userId, tokenCost, workoutId], (err) => {
             if (err) {
-              console.log('Could not find a workout with that ')
+              console.log('Error adding to token transaction table')
             } else {
-              let query =
-                'INSERT INTO token_transactions(user_id, amount, workoutId) values (?, ?, ?)'
+              // Update user token count
+              let query = `UPDATE users SET tokens = tokens - (?) WHERE id = (?)`
 
-              let workoutId = row.workoutId
-
-              db.run(query, [userId, tokenCost, workoutId], (err) => {
+              db.run(query, [tokenCost, userId], (err) => {
                 if (err) {
-                  console.log('Error adding to token transaction table')
+                  console.log('Error updating the user token count')
                 } else {
-                  //update user token count
-
-                  let query = `update users set tokens = tokens - (?) where id = (?)`
-
-                  db.run(query, [tokenCost, userId], (err) => {
-                    if (err) {
-                      console.log('Error updating the user token count')
-                    } else {
-                      return res.status(200).send({
-                        status: 'success',
-                        message: 'data successfully added to the DB',
-                      })
-                    }
+                  return res.status(200).send({
+                    status: 'success',
+                    message: 'Data successfully added to the DB',
                   })
                 }
               })
