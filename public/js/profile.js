@@ -123,15 +123,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       wrapper.innerHTML = `  
       <div class="token-trans-wrapper">
         <div>
-          <p>Program Name:</p>
+          <p>Program Name</p>
           <p class="bolded" data-id=${transaction.workoutId}>${transaction.programName}</p>
         </div>
         <div>
-          <p>Token Cost:</p>
+          <p>Token Cost</p>
           <p class="bolded">${transaction.amount}</p>
         </div>
         <div>
-          <p>Created At:</p>
+          <p>Created At</p>
           <p class="bolded">${transaction.created_at}</p>
         </div>
       </div>`

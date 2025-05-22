@@ -1014,11 +1014,18 @@ Token transactions page
   padding: 20px;
   justify-content: space-between;
 }
+.token-trans-wrapper div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
 .token-trans-wrapper div p {
   font-size: 14px;
 }
 .token-trans-wrapper .bolded {
   font-weight: 700;
+  font-size: 16px;
 }
 
 @media (width < 768px) {
