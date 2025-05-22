@@ -72,4 +72,24 @@ const getPaymentTransactionsByUser = (req, res) => {
   })
 }
 
-module.exports = { getUserById, getTokenTransactionByUser }
+const updateUserProfile = (req, res) => {
+  const { firstName, lastName, userId } = req.body
+
+  let query = 'update users set firstName = ?, lastName = ? where id = ?'
+
+  db.run(query, [firstName, lastName, userId], (err) => {
+    if (err) {
+      return res.status(500).json({
+        status: 'Failed',
+        message: 'Internal service error',
+      })
+    } else {
+      return res.status(200).json({
+        status: 'success',
+        message: 'User name successfully changed',
+      })
+    }
+  })
+}
+
+module.exports = { getUserById, getTokenTransactionByUser, updateUserProfile }

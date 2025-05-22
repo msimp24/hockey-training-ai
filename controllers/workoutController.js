@@ -186,6 +186,8 @@ const setCurrentProgram = (req, res) => {
   const workoutId = req.params.workoutId
   const userId = req.params.userId
 
+  console.log(userId)
+
   const updateQuery = 'UPDATE workouts set isCurrent = 0 where userId = (?)'
 
   db.run(updateQuery, [userId], (err) => {

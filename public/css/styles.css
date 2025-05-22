@@ -990,10 +990,13 @@ Profile page styles
 }
 .edit-account-form input {
   width: 100%;
-  padding: 6px;
+  padding: 4px;
   font-size: var(--font-size-sm);
 }
-
+.tint {
+  background-color: rgb(241, 240, 240);
+  border: 1px solid var(--primary-dark);
+}
 @media (width < 768px) {
   .prof-row {
     flex-direction: column;

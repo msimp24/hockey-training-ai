@@ -2,10 +2,17 @@
 <form class="edit-account-form">
   <label for="firstName">First Name</label>
   <input type="text" name="firstName" id="edit-first-name" />
+  <p class="error-text" id="edit-fname-err"></p>
   <label for="lastName">Last Name</label>
   <input type="text" name="firstName" id="edit-last-name" />
+  <p class="error-text" id="edit-lname-err"></p>
   <label for="email">Email</label>
-  <input type="text" id="edit-email" readonly value="mark.simpson4@gmail.com" />
+  <input
+    type="text"
+    id="edit-email"
+    readonly
+    value="mark.simpson4@gmail.com"
+    class="tint" />
   <div class="center">
     <button id="edit-account-btn">Save</button>
   </div>

@@ -38,7 +38,6 @@ homeLoginBtn.addEventListener('click', () => {
 })
 
 getStartedBtn.addEventListener('click', () => {
-  console.log('test')
   window.location.href = '/register'
 })
 

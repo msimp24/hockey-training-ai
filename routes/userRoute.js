@@ -8,4 +8,7 @@ router.route('/:id').get(userController.getUserById)
 
 //user purchase transactions
 
+//updates user profile
+router.route('/update-names').put(userController.updateUserProfile)
+
 module.exports = router
