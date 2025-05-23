@@ -211,27 +211,35 @@ const forgotPassword = (req, res) => {
               message: err,
             })
           } else {
-            smtpTransport.sendMail(
-              {
-                from: `Mailgun Sandbox <${process.env.MAIL_EMAIL}>`,
-                to: [`<${email}>`],
-                subject: 'Email confirmation',
-                text: `Hello, Click this link to reset your password.
-                ${currDomain}/auth/reset-password/${passVeficationToken} 
-                `,
-              },
-              (err, info) => {
-                if (err) {
-                  console.log('Error: ' + err)
-                }
+            let htmlContent = `
+            <div style="font-family: sans-serif;">
+              <p>Click the reset password button below to reset your password</p>
+              <a href="${currDomain}/auth/reset-password/${passVeficationToken}"
+              style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
+              Reset Password
+            </a>
+          </div>`
 
-                console.log('Email sent:', info)
+            resend.emails
+              .send({
+                from: `Hockey Training AI <noreply@${process.env.MAIL_DOMAIN}>`,
+                to: `${email}`,
+                subject: 'Email Confirmation',
+                html: htmlContent,
+              })
+              .then(() => {
                 return res.status(200).json({
-                  status: 'success',
-                  message: 'Password reset email sent successfully',
+                  status: 'Success',
+                  message: 'Password reset verification sent',
                 })
-              }
-            )
+              })
+              .catch((err) => {
+                console.error('Resend Email Error:', err)
+                return res.status(500).json({
+                  status: 'Failed',
+                  message: 'Password token failed to send',
+                })
+              })
           }
         }
       )
