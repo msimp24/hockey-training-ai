@@ -18,6 +18,14 @@ router.route('/verify-email').get((req, res) => {
   res.render('verify-email', { title: 'Verify Email' })
 })
 
+router.route('/forgot-password').get((req, res) => {
+  res.render('forgot-password', { title: 'Forgot Password' })
+})
+
+router.route('/auth/reset-password/:token').get((req, res) => {
+  res.render('reset-password', { title: 'Reset Password' })
+})
+
 router
   .route('/admin')
   .get(authenticate.protectRoute, authenticate.isAdmin, (req, res) => {

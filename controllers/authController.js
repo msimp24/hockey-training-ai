@@ -6,7 +6,7 @@ const crypto = require('crypto')
 
 const { Resend } = require('resend')
 
-const currDomain = process.env.dev_url
+const currDomain = process.env.FRONTEND_URL
 
 const resend = new Resend(process.env.MAIL_KEY)
 
