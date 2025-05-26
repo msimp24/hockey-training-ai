@@ -216,7 +216,6 @@ document.addEventListener('DOMContentLoaded', async () => {
               isValid = false
             } else {
               programNameErr.textContent = ''
-              isValid = true
               workoutForm.programName = programNameInput.value
             }
 
@@ -228,7 +227,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 ageErr.textContent = 'Age must be a number'
                 isValid = false
               } else {
-                isValid = true
                 ageErr.textContent = ''
                 workoutForm.age = Number(ageInput.value)
               }
@@ -238,7 +236,6 @@ document.addEventListener('DOMContentLoaded', async () => {
               skillErr.textContent = 'Skill level is a required field'
               isValid = false
             } else {
-              isValid = true
               skillErr.textContent = ''
               workoutForm.skillLevel = skillInput.value
             }
@@ -248,7 +245,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 'Selecting the number of workouts is a required field'
               isValid = false
             } else {
-              isValid = true
               numWorkoutsErr.textContent = ''
               workoutForm.workoutsPerWeek = Number(numWorkoutsInput.value)
             }
@@ -258,7 +254,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 'Selecting a workout time is a required field'
               isValid = false
             } else {
-              isValid = true
               workoutTimeErr.textContent = ''
               workoutForm.timeLimit = Number(workoutTimeInput.value)
             }
@@ -273,7 +268,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                   'Selecting a workout phase is a required field'
                 isValid = false
               } else {
-                isValid = true
                 focusErr.textContent = ''
                 workoutForm.improvements = focusInput.value
               }
