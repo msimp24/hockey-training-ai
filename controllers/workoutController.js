@@ -1,6 +1,5 @@
 require('dotenv').config()
 const db = require('../config/db')
-const axios = require('axios')
 
 const apiKey = process.env.GPT_SECRET_KEY
 
@@ -16,7 +15,7 @@ const generateWorkout = async (req, res) => {
     programDuration,
     workoutsPerWeek,
     timeLimit,
-    improvements,
+    improvements = 'Strength, Speed, Power',
   } = req.body
 
   let data = {

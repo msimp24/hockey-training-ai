@@ -58,36 +58,48 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       //get the number of phases for the current workout
 
-      /*
       try {
-        const response = await fetch(
-          `${http}workout/get-num-phases`,
+        const response = await fetch(`${http}workout/get-num-phases`, {
+          credentials: 'include',
+        })
+
+        const workoutsResponse = await fetch(
+          `${http}workout/program/${authData.userId}`,
           {
             credentials: 'include',
           }
         )
 
-        const json = await response.json()
+        const programs = await workoutsResponse.json()
 
-        let numberOfPhases = json.programDuration / 4
+        if (programs.length != 0) {
+          const phaseContainer = document.querySelector('.phase-container')
+          phaseContainer.style.display = 'flex'
 
-        const phaseSelect = document.querySelector('#phase-select')
-        for (let i = 0; i < numberOfPhases; i++) {
-          let option = document.createElement('option')
-          option.value = i
-          option.textContent = 'Phase ' + (i + 1)
-          phaseSelect.append(option)
+          const json = await response.json()
+
+          let numberOfPhases = json.programDuration / 4
+
+          const phaseSelect = document.querySelector('#phase-select')
+          for (let i = 0; i < numberOfPhases; i++) {
+            let option = document.createElement('option')
+            option.value = i
+            option.textContent = 'Phase ' + (i + 1)
+            phaseSelect.append(option)
+          }
+
+          phaseSelect.addEventListener('change', function () {
+            //creates the workout cards and displays them on the dashboard page
+            //generates workout selected by the user
+
+            getCurrentWorkoutPhase(authData.userId, this.value)
+          })
         }
-
-        phaseSelect.addEventListener('change', function () {
-          //creates the workout cards and displays them on the dashboard page
-        })
       } catch (err) {
         console.error(err)
       }
-        */
 
-      //generates workout selected by the user
+      //displays initial workout so the user does not have to display every time
 
       getCurrentWorkoutPhase(authData.userId, 0)
 
@@ -389,7 +401,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     let debounceTimeout
 
-    const LIMIT = 6
+    const LIMIT = 9
 
     async function loadTutorials(query = '', page = 1) {
       videoGrid.innerHTML = ''

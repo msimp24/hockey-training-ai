@@ -174,6 +174,8 @@ const addPaymentTransactionInfo = (userId, amount, stripeId, tokenAmount) => {
   })
 }
 
+const createInvoice = (email, amountPaid, tokenAmount, userId) => {}
+
 module.exports = {
   createCheckoutSession,
   getPriceData,

@@ -203,3 +203,10 @@ export function createNotEnoughTokens() {
 `
   return card
 }
+
+// creates card on create-workout view that allows user to pick which product they want
+export function createProductCard() {
+  let card = ''
+
+  card = ``
+}

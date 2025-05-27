@@ -12,120 +12,139 @@ async function getWorkoutFromPrompt(userData, apiKey) {
     improvements,
   } = userData
 
-  let repeat = 0
-  let phaseTarget = ''
+  let repeat = 1
   let tokenCost = 0
+  let phaseNames = []
 
-  if (programDuration == 4) {
+  if (programDuration === 4) {
     tokenCost = 15
-    repeat = 1
-    phaseTarget = `Create 1 phase that focuses on ${improvements}`
+    phaseNames = [improvements]
+  } else if (programDuration === 8) {
+    tokenCost = 30
+    repeat = 2
+    phaseNames = [
+      'Strength',
+      improvements.toLowerCase().includes('speed') ? 'Speed' : 'Power',
+    ]
+  } else if (programDuration === 12) {
+    tokenCost = 45
+    repeat = 3
+    phaseNames = ['Strength', 'Power', 'Speed']
   }
 
-  const prompt = `
-Key requirements:
-- Each day includes warmup, main workout, and cool down.
-- No duplicate exercises in the same week.
-- The formatted workout is just an example for the formatting and doesn't have to be that workout
-- ${phaseTarget}
--Include at least 5 warmup exercises
-- Must have ${workoutsPerWeek} days of workouts
-- Workout is based on ${improvements}
+  const allPhases = []
 
+  for (let i = 0; i < phaseNames.length; i++) {
+    const phaseFocus = phaseNames[i]
+    const phaseNumber = i + 1
 
+    const prompt = `
+You are a professional strength coach for hockey players.
 
-Constraints:
-- Age: ${age}, Skill level: ${skillLevel}, Equipment: ${availableEquipment}
-- Duration: ${programDuration} weeks, ${workoutsPerWeek} workouts/week, ${timeLimit} mins/workout
+## Objective
+Generate a 4-week training phase focused on **${phaseFocus}**.
+Each week should have ${workoutsPerWeek} structured workout days.
+Each day must include:
+- A warmup (5+ movements)
+- A main workout (6+ exercises or supersets)
+- A cool down (3+ recovery activities)
 
-Format:
+## Constraints
+- No duplicate exercises in the same week
+- Respect appropriate training balance for age ${age} and skill level ${skillLevel}
+- Only use available equipment: ${availableEquipment}
+- Each session must fit within ${timeLimit} minutes
+- Label this block with "phase_number": ${phaseNumber}
+
+## Format
+Follow this example formatting (do not reuse this workout — generate a new one):
+
 {
-  "program": {
-    "duration": "${programDuration} weeks (repeat ${
-      programDuration / repeat
-    } times)",
-    "focus": [${improvements}],
-    "workoutsPerWeek": ${workoutsPerWeek},
-    "durationPerWorkout": "${timeLimit} mins",
-    "equipmentRequired": ${availableEquipment}"
-  },
-  "phases": [
+  "phase_focus": "${phaseFocus}",
+  "phase_number": ${phaseNumber},
+  "weekly_schedule": [
     {
-      "phase_focus": "${improvements}",
-      "phase_number": 1,
-      "weekly_schedule": [
-        {
-            "day":1,
-            "focus": "Lower Body Strength",
-            "warmup": [
-              "5 mins bike for 5 mins",
-              "Dynamic lunges, 2x10/leg",
-              "Hip flexor stretch, 2x30s/leg",
-              "Single-leg balance with reach, 2x8/leg",
-              "Single leg glute bridge, 3x10/leg",
-
-            ],
-            "main_workout": [
-            (Format include at least 6 exercises)
-              "1A Back Squat, 4x8 @ 80-85% 1RM",
-              "1B Box Jumps, 4X6
-
-            ],
-            "cool_down": [
-              "Foam rolling for 10 mins",
-              "Hip flexor stretch, 2x30s/leg",
-              "Hamstring stretch, 2x30s/leg"
-            ]
-          }
-        }
+      "day": 1,
+      "focus": "Lower Body Strength",
+      "warmup": [
+        "5 mins bike",
+        "Dynamic lunges, 2x10/leg",
+        "Hip flexor stretch, 2x30s/leg",
+        "Single-leg balance with reach, 2x8/leg",
+        "Single leg glute bridge, 3x10/leg"
+      ],
+      "main_workout": [
+        "1A Back Squat, 4x8 @ 80-85% 1RM",
+        "1B Box Jumps, 4x6",
+        "2A Romanian Deadlift, 4x8",
+        "2B Walking Lunges, 3x12/leg",
+        "3A Leg Press, 3x12",
+        "3B Plank Hold, 3x45s"
+      ],
+      "cool_down": [
+        "Foam rolling for 10 mins",
+        "Hip flexor stretch, 2x30s/leg",
+        "Hamstring stretch, 2x30s/leg"
       ]
     }
+    // Add day 2, 3, etc.
   ]
 }
 `
 
-  const headers = {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${apiKey}`,
-  }
-
-  const requestBody = {
-    model: 'gpt-3.5-turbo',
-    messages: [
-      {
-        role: 'system',
-        content: 'You are a professional strength coach for hockey players.',
-      },
-      { role: 'user', content: prompt },
-    ],
-    max_tokens: 4000,
-    temperature: 0.7,
-  }
-
-  const url = 'https://api.openai.com/v1/chat/completions'
-
-  try {
-    const response = await axios.post(url, requestBody, { headers })
-    const result = response.data.choices[0].message.content
-
-    const tokensUsed = response.data.usage.total_tokens
-    console.log('Tokens used:', tokensUsed)
-
-    const cleanResult = result.replace(/```json\s*/g, '').replace(/```/g, '')
-
-    const workout = JSON.parse(cleanResult)
-
-    const programSerialize = JSON.stringify(workout.program)
-    const phaseSerialize = JSON.stringify(workout.phases)
-
-    return {
-      programSerialize,
-      phaseSerialize,
-      tokenCost,
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiKey}`,
     }
-  } catch (error) {
-    console.error('Error fetching workout:', error.message)
-    throw error
+
+    const requestBody = {
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are a professional strength coach for hockey players.',
+        },
+        { role: 'user', content: prompt },
+      ],
+      max_tokens: 3000,
+      temperature: 0.7,
+    }
+
+    const url = 'https://api.openai.com/v1/chat/completions'
+
+    try {
+      const response = await axios.post(url, requestBody, { headers })
+      const rawResult = response.data.choices[0].message.content
+      const cleanResult = rawResult
+        .replace(/```json\s*/g, '')
+        .replace(/```/g, '')
+      const parsedPhase = JSON.parse(cleanResult)
+      allPhases.push(parsedPhase)
+      console.log(
+        `Tokens used for phase ${phaseNumber}:`,
+        response.data.usage.total_tokens
+      )
+    } catch (error) {
+      console.error(`Error generating phase ${phaseNumber}:`, error.message)
+      throw new Error(`Failed to generate phase ${phaseNumber}`)
+    }
+  }
+
+  const workout = {
+    program: {
+      duration: `${programDuration} weeks (repeat ${repeat} times)`,
+      focus: phaseNames,
+      workoutsPerWeek,
+      durationPerWorkout: `${timeLimit} mins`,
+      equipmentRequired: availableEquipment,
+    },
+    phases: allPhases,
+  }
+
+  return {
+    programSerialize: JSON.stringify(workout.program),
+    phaseSerialize: JSON.stringify(workout.phases),
+    tokenCost,
   }
 }
 
