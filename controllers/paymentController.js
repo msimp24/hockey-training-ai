@@ -2,6 +2,12 @@ const db = require('../config/db')
 require('dotenv').config()
 const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
 
+const { Resend } = require('resend')
+
+const currDomain = process.env.FRONTEND_URL
+
+const resend = new Resend(process.env.MAIL_KEY)
+
 const createCheckoutSession = async (req, res) => {
   const id = req.body.id
   const userId = req.body.userId
@@ -142,6 +148,8 @@ const successfulPayment = async (req, res) => {
         tokenAmount
       )
       addTokensToUser(userId, tokenAmount)
+
+      createInvoice(userId, amountPaid, stripePaymentId, tokenAmount, email)
     } catch (err) {
       console.error('Unexpected DB error:', err)
     }
@@ -174,7 +182,124 @@ const addPaymentTransactionInfo = (userId, amount, stripeId, tokenAmount) => {
   })
 }
 
-const createInvoice = (email, amountPaid, tokenAmount, userId) => {}
+const createInvoice = (
+  userId,
+  amountPaid,
+  stripePaymentId,
+  tokenAmount,
+  email
+) => {
+  let firstName, lastName
+
+  db.get(
+    'select firstName, lastName from users where id = ?',
+    [userId],
+    (err, row) => {
+      if (err) {
+        return res.status(500).json({
+          status: 'failed',
+          message: err,
+        })
+      } else {
+        firstName = row.firstName
+        lastName = row.lastName
+
+        const date = new Date().toLocaleDateString('en-US', {
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric',
+        })
+
+        //email sent to user with invoice
+
+        const htmlContent = `
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Purchase Confirmation</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+      .header {
+        text-align: center;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+      }
+      .details {
+        margin-top: 20px;
+      }
+      .details p {
+        margin: 8px 0;
+      }
+      .footer {
+        margin-top: 30px;
+        font-size: 12px;
+        color: #888;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2>Thanks for your purchase ${firstName} ${lastName}!</h2>
+        <p>Here's a summary of your payment:</p>
+      </div>
+
+      <div class="details">
+        <p><strong>Email:</strong> {{email}}</p>
+        <p><strong>Amount Paid:</strong> ${amountPaid}</p>
+        <p><strong>Token Amount:</strong> ${tokenAmount}</p>
+        <p><strong>Order Number:</strong> ${stripePaymentId}</p>
+        <p><strong>Date:</strong> ${date}</p>
+      </div>
+
+      <div class="footer">
+        <p>If you have any questions, just reply to this email.</p>
+        <p>&copy; 2025 Hockey Training AI</p>
+      </div>
+    </div>
+  </body>
+</html>
+      `
+
+        resend.emails
+          .send({
+            from: `Hockey Training AI <noreply@${process.env.MAIL_DOMAIN}>`,
+            to: `${email}`,
+            subject: 'Email Confirmation',
+            html: htmlContent,
+          })
+          .then(() => {
+            return res.status(200).json({
+              status: 'Success',
+              message: 'Invoice sent to user',
+            })
+          })
+          .catch((err) => {
+            console.error('Resend Email Error:', err)
+            return res.status(500).json({
+              status: 'Failed',
+              message: 'Failed to send invoice to user',
+            })
+          })
+      }
+    }
+  )
+}
 
 module.exports = {
   createCheckoutSession,
