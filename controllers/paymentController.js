@@ -213,68 +213,99 @@ const createInvoice = (
         //email sent to user with invoice
 
         const htmlContent = `
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Purchase Confirmation</title>
+    <title>Invoice</title>
     <style>
       body {
         font-family: Arial, sans-serif;
-        background-color: #f8f9fa;
-        color: #333;
+        background-color: #f4f4f4;
         margin: 0;
         padding: 20px;
+        color: #333;
       }
-      .container {
-        max-width: 600px;
+      .invoice-box {
+        max-width: 700px;
         margin: auto;
         background: #ffffff;
-        padding: 20px;
         border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        padding: 30px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
-      .header {
+      h1 {
         text-align: center;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #eee;
+        color: #333;
+        margin-bottom: 30px;
       }
-      .details {
-        margin-top: 20px;
-      }
-      .details p {
-        margin: 8px 0;
-      }
-      .footer {
-        margin-top: 30px;
-        font-size: 12px;
-        color: #888;
+      .header, .footer {
         text-align: center;
+        color: #777;
+        font-size: 13px;
+      }
+      .info-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+      }
+      .info-table td {
+        padding: 8px 0;
+      }
+      .info-table .label {
+        font-weight: bold;
+        width: 200px;
+        vertical-align: top;
+      }
+      .summary-box {
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+      }
+      .summary-box p {
+        font-size: 16px;
+        margin: 5px 0;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <div class="header">
-        <h2>Thanks for your purchase ${firstName} ${lastName}!</h2>
-        <p>Here's a summary of your payment:</p>
+    <div class="invoice-box">
+      <h1>Payment Confirmation</h1>
+
+      <p class="header">Thank you for your purchase, <strong>${firstName} ${lastName}</strong>!</p>
+
+      <table class="info-table">
+        <tr>
+          <td class="label">Email:</td>
+          <td>${email}</td>
+        </tr>
+        <tr>
+          <td class="label">Order Number:</td>
+          <td>${stripePaymentId}</td>
+        </tr>
+        <tr>
+          <td class="label">Date:</td>
+          <td>${date}</td>
+        </tr>
+        <tr>
+          <td class="label">Tokens Purchased:</td>
+          <td>${tokenAmount}</td>
+        </tr>
+        <tr>
+          <td class="label">Amount Paid:</td>
+          <td><strong>$${amountPaid}</strong></td>
+        </tr>
+      </table>
+
+      <div class="summary-box">
+        <p>If you have any questions, feel free to reply to this email.</p>
+        <p>We hope to see you back soon!</p>
       </div>
 
-      <div class="details">
-        <p><strong>Email:</strong> {{email}}</p>
-        <p><strong>Amount Paid:</strong> ${amountPaid}</p>
-        <p><strong>Token Amount:</strong> ${tokenAmount}</p>
-        <p><strong>Order Number:</strong> ${stripePaymentId}</p>
-        <p><strong>Date:</strong> ${date}</p>
-      </div>
-
-      <div class="footer">
-        <p>If you have any questions, just reply to this email.</p>
-        <p>&copy; 2025 Hockey Training AI</p>
-      </div>
+      <p class="footer">&copy; 2025 Hockey Training AI</p>
     </div>
   </body>
 </html>
-      `
+  `
 
         resend.emails
           .send({
