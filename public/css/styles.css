@@ -54,6 +54,7 @@ body {
   animation: fadeInAnimation ease 1s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
+  background-color: #edecfd;
 }
 @keyframes fadeInAnimation {
   0% {
@@ -84,6 +85,41 @@ h2 {
   width: 100%;
 }
 
+@keyframes appear {
+  from {
+    opacity: 0;
+    scale: 0.5;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.home-container {
+  background-color: var(--primary-light);
+  width: 95%;
+  margin: 50px auto;
+  padding: 20px;
+  max-width: 1200px;
+  animation: appear linear;
+  animation-timeline: view();
+  animation-range: entry 0;
+}
+.home-container > .row > .col {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+}
+
+@media (width < 800px) {
+  .home-container .row {
+    flex-direction: column;
+  }
+}
+
 .login-btn {
   background-color: var(--primary-light);
   color: var(--accent-color);
@@ -93,9 +129,9 @@ h2 {
 }
 
 .hero {
-  height: 100vh;
   width: 100%;
-  background: linear-gradient(#141e30, #243b55);
+  height: 100vh;
+  background-image: url('/images/dark-gym.png');
 }
 
 .hero-content {
@@ -104,7 +140,7 @@ h2 {
   align-items: center;
   gap: 30px;
   justify-self: center;
-  margin: 100px 0;
+  margin: 150px 0;
 }
 .hero-title {
   color: var(--primary-light);
@@ -179,15 +215,31 @@ button:focus {
   gap: 30px;
 }
 
+.hero-h1-dashboard {
+  height: 200px;
+  width: 100%;
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 50px 0;
+}
+.hero-h1-dashboard .h2-dashboard {
+  text-align: center;
+  color: var(--primary-dark);
+  font-size: var(--font-size-lg);
+}
+
 .h1-dashboard {
   text-align: center;
-  color: var(--primary-light);
+  color: var(--primary-white);
   font-size: var(--font-size-xl);
 }
 .h2-dashboard {
   text-align: center;
   color: var(--primary-light);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-lg);
 }
 
 .dashboard-nav {
@@ -495,6 +547,14 @@ button:focus {
   padding: 4px 8px;
   width: 100%;
   font-size: var(--font-size-sm);
+}
+.prompt-form textarea {
+  border-radius: 8px;
+  padding: 4px 8px;
+  width: 100%;
+  font-size: var(--font-size-sm);
+  resize: none;
+  height: 250px;
 }
 .prompt-form select {
   border-radius: 8px;
@@ -806,7 +866,7 @@ th {
 
 .phase-card .left-side {
   width: 100%;
-  padding: 10px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -829,9 +889,10 @@ th {
   text-align: center;
 }
 
-@media (width < 1024px) {
+@media (width < 1050px) {
   .phase-card {
     flex-direction: column;
+    max-width: 700px;
   }
   .phase-card .right-side img {
     border-top-right-radius: 0px;

@@ -10,7 +10,10 @@ async function getWorkoutFromPrompt(userData, apiKey) {
     workoutsPerWeek,
     timeLimit,
     improvements,
+    notes,
   } = userData
+
+  console.log(notes)
 
   let repeat = 1
   let tokenCost = 0
@@ -56,6 +59,9 @@ Each day must include:
 - Each session must fit within ${timeLimit} minutes
 - Label this block with "phase_number": ${phaseNumber}
 
+## Additional notes from user to take into account
+${notes}
+
 ## Format
 Follow this example formatting (do not reuse this workout — generate a new one):
 
@@ -82,9 +88,7 @@ Follow this example formatting (do not reuse this workout — generate a new one
         "3B Plank Hold, 3x45s"
       ],
       "cool_down": [
-        "Foam rolling for 10 mins",
-        "Hip flexor stretch, 2x30s/leg",
-        "Hamstring stretch, 2x30s/leg"
+
       ]
     }
     // Add day 2, 3, etc.

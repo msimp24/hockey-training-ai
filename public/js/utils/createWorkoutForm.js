@@ -183,6 +183,12 @@ export function createWorkoutFormHtml(phaseNumber) {
         </div>
         <p class="error-text" id="equipment-err"></p>
       </div>
+      <div class="input-box">
+        <label>Additional Notes (Optional)</label>
+        <textarea id="additional-notes"></textarea>
+        <p id="char-count"></p>
+        <p class="error-text" id="notes-err"></p>
+      </div>
       <button id="generate-workout-btn" type="submit">Generate Program</button>
     </form>
  `

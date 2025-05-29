@@ -214,6 +214,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
           const equipmentErr = document.querySelector('#equipment-err')
 
+          const notesInput = document.querySelector('#additional-notes')
+          const notesErr = document.querySelector('#notes-err')
+          const charCount = document.querySelector('#char-count')
+
+          //counts the number of characters for additional notes
+          notesInput.addEventListener('input', function (e) {
+            // Limit input to 400 characters
+            if (this.value.length > 400) {
+              this.value = this.value.slice(0, 400)
+            }
+
+            charCount.innerHTML =
+              'Characters left: ' + (400 - this.value.length)
+          })
           generateWorkoutForm.addEventListener('submit', (e) => {
             e.preventDefault()
 
@@ -299,6 +313,8 @@ document.addEventListener('DOMContentLoaded', async () => {
               equipmentErr.textContent = ''
               workoutForm.availableEquipment = selectedEquipment // Save as a string
             }
+
+            workoutForm.notes = notesInput.value
 
             if (isValid) {
               console.log(workoutForm)
@@ -492,8 +508,7 @@ const getCurrentWorkoutPhase = async (userId, phase) => {
 
     const phaseFocus = document.querySelector('#phase-focus-header')
 
-    phaseFocus.innerHTML = ` <h2 class="h2-dashboard" id="phase-focus-header">Phase focus - ${phases[phase].phase_focus}</h2>
-    <br>
+    phaseFocus.innerHTML = ` <h2 class="h2-dashboard" id="phase-focus-header">${phases[phase].phase_focus}</h2>
     <h2 class="h2-dashboard">Repeat phase for 4 weeks</h2>
     `
 

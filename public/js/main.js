@@ -5,7 +5,8 @@ const homeLoginBtn = document.querySelector('#login')
 const homeBtnContainer = document.querySelector('.nav-btn-container')
 const dashboardBtn = document.querySelector('#dashboard-btn')
 
-const getStartedBtn = document.querySelector('#get-started-btn')
+const getStartedBtn = document.querySelectorAll('.get-started-btn')
+const learnMoreBtn = document.querySelector('#learn-more-btn')
 
 async function checkStatus() {
   const authData = await checkAuth()
@@ -37,12 +38,21 @@ homeLoginBtn.addEventListener('click', () => {
   window.location.href = '/login'
 })
 
-getStartedBtn.addEventListener('click', () => {
-  window.location.href = '/register'
+getStartedBtn.forEach((button) => {
+  button.addEventListener('click', () => {
+    window.location.href = '/register'
+  })
 })
 
 dashboardBtn.addEventListener('click', () => {
   window.location.href = '/dashboard'
+})
+
+learnMoreBtn.addEventListener('click', () => {
+  const targetSection = document.getElementById('website-info')
+  if (targetSection) {
+    targetSection.scrollIntoView({ behavior: 'smooth' })
+  }
 })
 
 window.onload = checkStatus()

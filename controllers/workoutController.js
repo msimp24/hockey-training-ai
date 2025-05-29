@@ -16,6 +16,7 @@ const generateWorkout = async (req, res) => {
     workoutsPerWeek,
     timeLimit,
     improvements = 'Strength, Speed, Power',
+    notes,
   } = req.body
 
   let data = {
@@ -27,6 +28,7 @@ const generateWorkout = async (req, res) => {
     workoutsPerWeek: workoutsPerWeek,
     timeLimit: timeLimit,
     improvements: improvements,
+    notes: notes,
   }
 
   try {

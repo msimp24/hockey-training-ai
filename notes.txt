@@ -1,21 +1,23 @@
-Payment structure
-- Free trial allows 2 free workout prompts
-- Monthly Plan starting at 
-
-Dashboard Nav
-- Current Program
-- List of past programs
-- Click for form to create new program
-- How to Video
-- Profile Info
-- Puck Handling Drills
-
 
 TODO:
-Set current workout to the user how is currently logged in
 
-Insert a record in transactions (type = 'purchase').
+Before launch***
 
-Insert a workout record.
+- Create a footer
 
-Insert a transaction (type = 'workout_usage').
+- Fix prompt based on what workout plan and purchase
+
+- Insert more exercises into the DB based on exercises that AI provides
+
+- Provide payment transaction section on edit profile page
+
+Extra TODOs
+
+Create a CMS as an admin to manage clients efficiently
+
+
+
+
+
+
+
