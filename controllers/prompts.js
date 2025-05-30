@@ -13,9 +13,6 @@ async function getWorkoutFromPrompt(userData, apiKey) {
     notes,
   } = userData
 
-  console.log(notes)
-
-  let repeat = 1
   let tokenCost = 0
   let phaseNames = []
 
@@ -24,14 +21,12 @@ async function getWorkoutFromPrompt(userData, apiKey) {
     phaseNames = [improvements]
   } else if (programDuration === 8) {
     tokenCost = 30
-    repeat = 2
     phaseNames = [
       'Strength',
       improvements.toLowerCase().includes('speed') ? 'Speed' : 'Power',
     ]
   } else if (programDuration === 12) {
     tokenCost = 45
-    repeat = 3
     phaseNames = ['Strength', 'Power', 'Speed']
   }
 
@@ -136,7 +131,7 @@ Follow this example formatting (do not reuse this workout — generate a new one
 
   const workout = {
     program: {
-      duration: `${programDuration} weeks (repeat ${repeat} times)`,
+      duration: `${programDuration} weeks`,
       focus: phaseNames,
       workoutsPerWeek,
       durationPerWorkout: `${timeLimit} mins`,
