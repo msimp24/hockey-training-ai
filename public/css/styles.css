@@ -221,6 +221,7 @@ footer {
 
 .copyright {
   color: var(--primary-light);
+  font-size: var(--font-size-md);
 }
 
 .footer-nav {
@@ -232,7 +233,7 @@ footer {
   text-decoration: none;
   cursor: pointer;
   color: var(--primary-light);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   text-align: center;
 }
 .footer-nav a:hover {
@@ -916,6 +917,7 @@ th {
 .phase-card .right-side img {
   border-top-right-radius: var(--btn-border-radius);
   border-bottom-right-radius: var(--btn-border-radius);
+  width: 100%;
 }
 
 .phase-card .left-side {
