@@ -21,6 +21,13 @@ router.route('/verify-email').get((req, res) => {
 router.route('/forgot-password').get((req, res) => {
   res.render('forgot-password', { title: 'Forgot Password' })
 })
+router.route('/about').get((req, res) => {
+  res.render('about', { title: 'About Page' })
+})
+
+router.route('/contact').get((req, res) => {
+  res.render('contact', { title: 'Contact Us Page' })
+})
 
 router.route('/auth/reset-password/:token').get((req, res) => {
   res.render('reset-password', { title: 'Reset Password' })

@@ -1,6 +1,8 @@
 require('dotenv').config({ path: '../.env' })
 const axios = require('axios')
 
+const generatePrompt = (userData) => {}
+
 async function getWorkoutFromPrompt(userData, apiKey) {
   const {
     age,

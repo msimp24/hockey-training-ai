@@ -211,6 +211,7 @@ footer {
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .footer-logo {
@@ -222,6 +223,8 @@ footer {
 .copyright {
   color: var(--primary-light);
   font-size: var(--font-size-md);
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .footer-nav {
@@ -775,7 +778,6 @@ footer {
 .pricing-card {
   width: 100%;
   border: solid 3px var(--accent-color);
-  max-width: 300px;
   padding: 40px;
   display: flex;
   flex-direction: column;
@@ -785,6 +787,7 @@ footer {
   min-height: 500px;
   background-color: #1f2a40;
   backdrop-filter: blur(10px);
+  max-width: 300px;
 }
 .pricing-card button {
   background-color: transparent;
@@ -1342,7 +1345,6 @@ Token transactions page
     transform: translateY(0px);
   }
   .pricing-card {
-    max-width: 300px;
     width: 100%;
   }
 }
