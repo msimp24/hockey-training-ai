@@ -77,8 +77,6 @@ export function createWorkoutFormHtml(phaseNumber) {
           <label for="workout-time">Workout Length (minutes)</label>
           <select name="workout-time" id="workout-time-input">
             <option hidden>Select</option>
-
-            <option value="30">30</option>
             <option value="60">60</option>
             <option value="90">90</option>
           </select>

@@ -3,13 +3,17 @@ TODO:
 
 Before launch***
 
-- Create a footer
-
-- Fix prompt based on what workout plan and purchase
-
 - Insert more exercises into the DB based on exercises that AI provides
 
 - Provide payment transaction section on edit profile page
+
+- Change login to log out on footer if the user is logged in
+
+- Remove Log out from the dashboard nav
+
+- Make workout page look better
+
+- Add workout notes for user depending on the phase, get AI to explain the goal of the phase and how to approach each exercise
 
 Extra TODOs
 
