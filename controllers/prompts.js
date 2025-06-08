@@ -44,7 +44,7 @@ const generatePrompt = (userData, phaseFocus, phaseNumber) => {
     }
   } else if ((phaseFocus = 'speed')) {
     focusNote =
-      'Incomporate speed drills with power and conditioning. This is the users last 4 weeks to get ready for the hockey season. Ex: tempo runs, ladder drills, sprints'
+      'Incomporate speed drills with power and conditioning. This is the users last 4 weeks to get ready for the hockey season. Ex: tempo runs, ladder drills, sprints.'
   } else {
     focusNote = ''
   }

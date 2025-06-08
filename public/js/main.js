@@ -1,4 +1,4 @@
-import { checkAuth, fetchUserData } from './utils/utilities.js'
+import { checkAuth, fetchUserData, logout } from './utils/utilities.js'
 
 const homeRegisterBtn = document.querySelector('#register-btn')
 const homeLoginBtn = document.querySelector('#login')
@@ -8,6 +8,10 @@ const dashboardBtn = document.querySelector('#dashboard-btn')
 const getStartedBtn = document.querySelectorAll('.get-started-btn')
 const learnMoreBtn = document.querySelector('#learn-more-btn')
 
+//get footer login
+
+const footerLogin = document.getElementById('footer-login')
+
 async function checkStatus() {
   const authData = await checkAuth()
 
@@ -16,6 +20,10 @@ async function checkStatus() {
 
     homeRegisterBtn.style.display = 'none'
     homeLoginBtn.style.display = 'none'
+
+    footerLogin.textContent = 'Logout'
+
+    footerLogin.addEventListener('click', logout)
 
     //shows dashboard button if user is logged in
     dashboardBtn.style.display = 'block'

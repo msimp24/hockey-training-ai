@@ -87,3 +87,10 @@ export async function fetchUserTokens(url, userId) {
     return { error: err.message || 'Unknown error occurred' }
   }
 }
+
+export function capitalize(str) {
+  let char = str.slice(0, 1).toUpperCase()
+  let temp = str.slice(1)
+  temp = char + temp
+  return temp
+}

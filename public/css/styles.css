@@ -268,8 +268,6 @@ footer {
 .hero-h1-dashboard {
   height: 200px;
   width: 100%;
-  background-color: var(--primary-light);
-  color: var(--primary-dark);
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -277,19 +275,22 @@ footer {
 }
 .hero-h1-dashboard .h2-dashboard {
   text-align: center;
-  color: var(--primary-dark);
+  color: var(--primary-light);
   font-size: var(--font-size-lg);
 }
 
 @media (width < 1000px) {
   .hero-h1-dashboard .h2-dashboard {
     text-align: center;
-    color: var(--primary-dark);
+    color: var(--primary-light);
     font-size: var(--font-size-md);
   }
   .hero-h1-dashboard .h1-dashboard {
     font-size: var(--font-size-lg);
   }
+}
+.hero-h1-dashboard .h1-dashboard {
+  color: var(--primary-light);
 }
 
 .h1-dashboard {

@@ -4,6 +4,7 @@ import {
   fetchUserData,
   fetchData,
   fetchUserTokens,
+  capitalize,
 } from './utils/utilities.js'
 import {
   createNotEnoughTokens,
@@ -38,14 +39,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   const currentLocation = window.location.pathname
   const authData = await checkAuth()
 
-  const logoutBtn = document.querySelector('#logout-btn')
   const currUser = document.querySelector('#curr-user')
 
-  logoutBtn.addEventListener('click', logout)
+  //handles login button for the footer
+  const footerLogin = document.getElementById('footer-login')
+
   const userData = await fetchUserData(authData.userId)
 
   if (authData.loggedIn) {
     currUser.textContent = `Hello, ${userData.firstName}`
+    footerLogin.textContent = 'Logout'
+    footerLogin.addEventListener('click', logout)
   } else {
     window.location.href = '/login'
   }
@@ -508,7 +512,7 @@ const getCurrentWorkoutPhase = async (userId, phase) => {
 
     const phaseFocus = document.querySelector('#phase-focus-header')
 
-    phaseFocus.innerHTML = ` <h2 class="h2-dashboard" id="phase-focus-header">${phases[phase].phase_focus}</h2>
+    phaseFocus.innerHTML = ` <h2 class="h2-dashboard" id="phase-focus-header">${capitalize(phases[phase].phase_focus)}</h2>
     <h2 class="h2-dashboard">Repeat phase for 4 weeks</h2>
     `
 
