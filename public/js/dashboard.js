@@ -75,7 +75,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         )
 
         const programs = await workoutsResponse.json()
-        console.log(programs)
 
         if (programs.length != 0) {
           const phaseContainer = document.querySelector('.phase-container')
@@ -339,18 +338,41 @@ document.addEventListener('DOMContentLoaded', async () => {
     )
     const allWorkoutsGrid = document.querySelector('.all-workout-grid')
 
-    data.forEach((el) => {
-      let card = document.createElement('div')
-      card.innerHTML = createAllWorkoutsCard(el)
-      allWorkoutsGrid.append(card)
-    })
-    document.querySelectorAll('button[data-id]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const workoutId = button.dataset.id
-        //add user id to set the current workout of the user that is currently logged in
-        setCurrentWorkout(workoutId, userData.id)
+    if (!data.length) {
+      const createWorkoutBtn = document.createElement('button')
+      const noWorkoutsh1 = document.createElement('h2')
+      allWorkoutsGrid.style.cssText = `
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+        `
+
+      noWorkoutsh1.textContent = 'Currently no workouts created'
+
+      createWorkoutBtn.textContent = 'Generate Workout'
+      createWorkoutBtn.classList.add('create-workout-btn')
+
+      createWorkoutBtn.addEventListener('click', () => {
+        window.location.href = '/dashboard/create-workout'
       })
-    })
+
+      allWorkoutsGrid.append(noWorkoutsh1)
+      allWorkoutsGrid.append(createWorkoutBtn)
+    } else {
+      data.forEach((el) => {
+        let card = document.createElement('div')
+        card.innerHTML = createAllWorkoutsCard(el)
+        allWorkoutsGrid.append(card)
+      })
+      document.querySelectorAll('button[data-id]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const workoutId = button.dataset.id
+          //add user id to set the current workout of the user that is currently logged in
+          setCurrentWorkout(workoutId, userData.id)
+        })
+      })
+    }
   }
 
   if (currentLocation === '/dashboard/buy-tokens') {
@@ -504,8 +526,16 @@ const getCurrentPhaseDescription = async (userId, phase) => {
 
     const workouts = await response.json()
     const phaseDescription = document.querySelector('#phase-description')
+    const descriptionWrapper = document.querySelector(
+      '.phase-description-wrapper'
+    )
 
     let phases = JSON.parse(workouts[0].phase)
+
+    if (phases) {
+      console.log(phases)
+      descriptionWrapper.style.display = 'flex'
+    }
     let description = phases[phase].phase_description
     phaseDescription.innerHTML = description
   } catch (err) {
@@ -550,7 +580,7 @@ const createProgramSummary = async (userId, programName) => {
   })
   const programCard = document.createElement('div')
   programCard.classList.add('program-card')
-  const workoutWrapper = document.querySelector('#workout-wrapper')
+  const workoutWrapper = document.querySelector('.workout-wrapper')
 
   let program = await response.json()
 
@@ -735,6 +765,8 @@ const generateWorkout = async (data, url) => {
 }
 
 const createAllWorkoutsCard = (workout) => {
+  let arr = workout.improvements.split(',')
+  console.log(arr)
   let card = `
      <div class="all-workout-card">
         <h2>${workout.programName}</h2>

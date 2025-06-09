@@ -380,6 +380,9 @@ footer {
   border: 2px solid var(--primary-dark);
   max-width: 200px;
 }
+#select-phase-header {
+  display: none;
+}
 
 .program-card {
   background: var(--primary-light);
@@ -521,7 +524,7 @@ footer {
 .phase-description-wrapper {
   background-color: var(--primary-light);
   border-radius: var(--btn-border-radius);
-  display: flex;
+  display: none;
   flex-direction: column;
   box-shadow: var(--btn-shadow);
   padding: 20px;

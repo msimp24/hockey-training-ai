@@ -199,14 +199,16 @@ async function getWorkoutFromPrompt(userData, apiKey) {
 
   const workout = {
     program: {
-      programName: programName,
+      programName: String(programName),
       duration: `${programDuration} weeks`,
-      focus: phaseNames,
-      workoutsPerWeek,
+      focus: Array.isArray(phaseNames) ? phaseNames : [],
+      workoutsPerWeek: Number(workoutsPerWeek),
       durationPerWorkout: `${timeLimit} mins`,
-      equipmentRequired: availableEquipment,
+      equipmentRequired: Array.isArray(availableEquipment)
+        ? availableEquipment
+        : [],
     },
-    phases: allPhases,
+    phases: Array.isArray(allPhases) ? allPhases : [],
   }
 
   return {

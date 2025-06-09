@@ -52,7 +52,7 @@ const generateWorkout = async (req, res) => {
         programDuration,
         workoutsPerWeek,
         timeLimit,
-        improvements.toUpperCase(),
+        improvements,
         programSerialize,
         phaseSerialize,
         1,
