@@ -341,7 +341,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!data.length) {
       const createWorkoutBtn = document.createElement('button')
       const noWorkoutsh1 = document.createElement('h2')
-      workoutWrapper.style.cssText = `
+      allWorkoutsGrid.style.cssText = `
           display: flex;
           flex-direction: column;
           align-items: center;
