@@ -63,13 +63,13 @@ const generatePrompt = (userData, phaseFocus, phaseNumber) => {
   ## Constraints
   - No duplicate exercises in the same week
   - Respect appropriate training balance for age ${userData.age} and skill level ${userData.skillLevel}
+  - Only use available equipment: ${userData.availableEquipment} 
 
   - Label this block with "phase_number": ${phaseNumber}
   - ${focusNote}
 
   ## Base this workout on this equipment -> ${userData.availableEquipment}, this is a must requirement
   ex: If user puts dumbbells, chin ups CAN'T be in the workout
-  ex: if ${userData.availableEquipment} is no equipment, there can't be deadlifts, chin ups, pull ups. You are assuming the using has no equipment, just themselves
 
   ## Additional notes from user to take into account
  - ${userData.notes}
@@ -200,12 +200,12 @@ async function getWorkoutFromPrompt(userData, apiKey) {
   const workout = {
     program: {
       duration: `${programDuration} weeks`,
-      focus: phaseNames,
-      workoutsPerWeek: workoutsPerWeek,
+      focus: Array.isArray(phaseNames) ? phaseNames : [],
+      workoutsPerWeek: Number(workoutsPerWeek),
       durationPerWorkout: `${timeLimit} mins`,
       equipmentRequired: availableEquipment,
     },
-    phases: allPhases,
+    phases: Array.isArray(allPhases) ? allPhases : [],
   }
 
   return {
