@@ -199,7 +199,7 @@ async function getWorkoutFromPrompt(userData, apiKey) {
 
   const workout = {
     program: {
-      programName: `${programName}`,
+      programName: programName,
       duration: `${programDuration} weeks`,
       focus: phaseNames,
       workoutsPerWeek,
