@@ -80,6 +80,16 @@ const generatePrompt = (userData, phaseFocus, phaseNumber) => {
   {
     "phase_focus": "${phaseFocus}",
     "phase_number": ${phaseNumber},
+    "phase_description":""phase_description": "Provide a clear, practical coaching description of what the athlete should focus on during this phase. 
+Base the description on the phase focus '${phaseFocus}', and include *specific training intent* such as (minimum 400 characters):
+
+- For 'Strength': Focus on lifting as heavy as possible with good technique and full rest between sets.
+- For 'Power': Move each rep as fast and explosively as possible with intent.
+- For 'Speed': Prioritize maximum velocity and quick ground contact times; all movements should be fast and crisp.
+- For 'Cardio': Emphasize sustained effort, efficient breathing, and maintaining pace; focus on heart rate zones and aerobic capacity.
+
+Keep the language goal-driven, brief, and easy to understand for the athlete."
+"
     "weekly_schedule": [
       {
         "day": 1,
@@ -114,6 +124,7 @@ async function getWorkoutFromPrompt(userData, apiKey) {
   const {
     age,
     skillLevel,
+    programName,
     availableEquipment,
     programDuration,
     workoutsPerWeek,
@@ -123,6 +134,8 @@ async function getWorkoutFromPrompt(userData, apiKey) {
   } = userData
   let arrTokenCost = [15, 30, 45]
 
+  console.log(programName)
+
   let tokenCost = 0
   let phaseNames = []
 
@@ -131,10 +144,7 @@ async function getWorkoutFromPrompt(userData, apiKey) {
     phaseNames = [improvements]
   } else if (programDuration === 8) {
     tokenCost = arrTokenCost[1]
-    phaseNames = [
-      'Strength',
-      improvements.toLowerCase().includes('speed') ? 'Speed' : 'Power',
-    ]
+    phaseNames = ['Strength', 'Power']
   } else if (programDuration === 12) {
     tokenCost = arrTokenCost[2]
     phaseNames = ['Strength', 'Power', 'Speed']
@@ -189,6 +199,7 @@ async function getWorkoutFromPrompt(userData, apiKey) {
 
   const workout = {
     program: {
+      programName: `${programName}`,
       duration: `${programDuration} weeks`,
       focus: phaseNames,
       workoutsPerWeek,

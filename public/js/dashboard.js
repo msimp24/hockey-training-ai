@@ -75,6 +75,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         )
 
         const programs = await workoutsResponse.json()
+        console.log(programs)
 
         if (programs.length != 0) {
           const phaseContainer = document.querySelector('.phase-container')
@@ -95,7 +96,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           phaseSelect.addEventListener('change', function () {
             //creates the workout cards and displays them on the dashboard page
             //generates workout selected by the user
-
+            getCurrentPhaseDescription(authData.userId, this.value)
             getCurrentWorkoutPhase(authData.userId, this.value)
           })
         }
@@ -106,6 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       //displays initial workout so the user does not have to display every time
 
       getCurrentWorkoutPhase(authData.userId, 0)
+      getCurrentPhaseDescription(authData.userId, 0)
 
       //creates program summary of the workout
 
@@ -492,6 +494,25 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 })
 
+//gets the description of the users current phase
+
+const getCurrentPhaseDescription = async (userId, phase) => {
+  try {
+    const response = await fetch(`${http}workout/get-current-phase/${userId}`, {
+      credentials: 'include',
+    })
+
+    const workouts = await response.json()
+    const phaseDescription = document.querySelector('#phase-description')
+
+    let phases = JSON.parse(workouts[0].phase)
+    let description = phases[phase].phase_description
+    phaseDescription.innerHTML = description
+  } catch (err) {
+    console.error('There was an error fetching data:' + err)
+  }
+}
+
 const getCurrentWorkoutPhase = async (userId, phase) => {
   try {
     const response = await fetch(`${http}workout/get-current-phase/${userId}`, {
@@ -500,13 +521,6 @@ const getCurrentWorkoutPhase = async (userId, phase) => {
     const workoutsGrid = document.querySelector('.workouts-grid')
 
     const workouts = await response.json()
-    const workoutName = workouts[0].programName
-
-    //changes name of the current workout selected
-    const workoutNameSelector = document.querySelector('#current-workout-name')
-    workoutNameSelector.textContent = workoutName
-
-    //
 
     let phases = JSON.parse(workouts[0].phase)
 
@@ -530,7 +544,7 @@ const getCurrentWorkoutPhase = async (userId, phase) => {
 }
 
 //Creates program summary on the dashboard page based on the users current workout plan
-const createProgramSummary = async (userId) => {
+const createProgramSummary = async (userId, programName) => {
   const response = await fetch(`${http}workout/program/${userId}`, {
     credentials: 'include',
   })
@@ -563,9 +577,14 @@ const createProgramSummary = async (userId) => {
     workoutWrapper.append(createWorkoutBtn)
   } else {
     program = JSON.parse(program[0].program)
+    console.log(program[0])
     programCard.innerHTML = `
           <h2>Program Summary</h2>
             <hr />
+            <div>
+              <p class="title">Program Name:</p>
+              <p class="desc">${program.programName}</p>
+            </div>
             <div>
               <p class="title">Duration:</p>
               <p class="desc">${program.duration}</p>
@@ -588,6 +607,7 @@ const createProgramSummary = async (userId) => {
               <p class="desc">${program.equipmentRequired}</p>
             </div>
           
+
   `
 
     workoutWrapper.append(programCard)

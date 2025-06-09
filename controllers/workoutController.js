@@ -21,6 +21,7 @@ const generateWorkout = async (req, res) => {
 
   let data = {
     userId: userId,
+    programName: programName,
     age: age,
     skillLevel: skillLevel,
     availableEquipment: availableEquipment,
