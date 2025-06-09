@@ -202,6 +202,7 @@ async function getWorkoutFromPrompt(userData, apiKey) {
       duration: `${programDuration} weeks`,
       focus: Array.isArray(phaseNames) ? phaseNames : [],
       workoutsPerWeek: Number(workoutsPerWeek),
+      programName: programName,
       durationPerWorkout: `${timeLimit} mins`,
       equipmentRequired: availableEquipment,
     },
