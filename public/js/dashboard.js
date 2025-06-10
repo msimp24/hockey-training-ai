@@ -574,7 +574,7 @@ const getCurrentWorkoutPhase = async (userId, phase) => {
 }
 
 //Creates program summary on the dashboard page based on the users current workout plan
-const createProgramSummary = async (userId, programName) => {
+const createProgramSummary = async (userId) => {
   const response = await fetch(`${http}workout/program/${userId}`, {
     credentials: 'include',
   })

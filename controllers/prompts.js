@@ -14,8 +14,7 @@ const generatePrompt = (userData, phaseFocus, phaseNumber) => {
 
   phaseFocus = phaseFocus.toLowerCase()
 
-  console.log(phaseFocus)
-
+  console.log(userData.availableEquipment)
   //Additional Changes for the Strength Prompt
 
   if (phaseFocus === 'strength') {
@@ -42,7 +41,7 @@ const generatePrompt = (userData, phaseFocus, phaseNumber) => {
       focusNote =
         'Upper body pull day 1, lower body quad dominant day 2, day 3 is core and mobility, upper body push day 4 and lower body posterior chain day 5.'
     }
-  } else if ((phaseFocus = 'speed')) {
+  } else if (phaseFocus === 'speed') {
     focusNote =
       'Incomporate speed drills with power and conditioning. This is the users last 4 weeks to get ready for the hockey season. Ex: tempo runs, ladder drills, sprints.'
   } else {
@@ -63,13 +62,39 @@ const generatePrompt = (userData, phaseFocus, phaseNumber) => {
   ## Constraints
   - No duplicate exercises in the same week
   - Respect appropriate training balance for age ${userData.age} and skill level ${userData.skillLevel}
-  - Only use available equipment: ${userData.availableEquipment} 
 
   - Label this block with "phase_number": ${phaseNumber}
   - ${focusNote}
 
-  ## Base this workout on this equipment -> ${userData.availableEquipment}, this is a must requirement
-  ex: If user puts dumbbells, chin ups CAN'T be in the workout
+## Equipment Rules
+- You may only include exercises that require **ONLY** this equipment: ${userData.availableEquipment}
+- **Do NOT** include exercises that require any equipment not listed above. For example:
+  - If dumbbells are provided, barbell or machine exercises are NOT allowed.
+- Absolutely no substitutions or assumptions. Only generate what’s strictly possible with this list.
+
+## 🚫 Absolute Rules
+- If "no equipment" is listed, you must not include **any exercise** that requires:
+  - Pull-up bars, dip bars, chairs, benches, boxes, bands, water bottles, or any props at all.
+  - No "bodyweight rows", "face pulls", or any banded exercises.
+  - Only 100% pure bodyweight exercises done on the floor are allowed (e.g., push-ups, squats, lunges, planks, superman holds, burpees, etc.).
+Example of no equipment upper body:
+1A Pike Push-Ups  
+4x8-10
+
+1B Plank Shoulder Taps  
+4x10/side
+
+2A Diamond Push-Ups  
+3x12-15
+
+2B Superman Holds  
+3x30s
+
+3A Push-Up to Downward Dog  
+3x10
+
+3B Plank to Side Plank  
+3x10/side
 
   ## Additional notes from user to take into account
  - ${userData.notes}
@@ -204,6 +229,7 @@ async function getWorkoutFromPrompt(userData, apiKey) {
       workoutsPerWeek: Number(workoutsPerWeek),
       durationPerWorkout: `${timeLimit} mins`,
       equipmentRequired: availableEquipment,
+      programName: programName,
     },
     phases: Array.isArray(allPhases) ? allPhases : [],
   }
