@@ -1,7 +1,7 @@
 const http =
   window.location.hostname === 'localhost'
     ? 'http://localhost:3000/'
-    : 'https://hockey-training-ai.com/'
+    : 'https://www.hockey-training-ai.com/'
 
 const contactForm = document.querySelector('.contact-form')
 
@@ -75,6 +75,7 @@ contactForm.addEventListener('submit', (e) => {
 })
 
 const sendContactUsForm = async (data, url) => {
+  console.log(url)
   try {
     const response = await fetch(url, {
       method: 'POST',
