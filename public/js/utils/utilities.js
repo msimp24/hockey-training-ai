@@ -47,6 +47,8 @@ export async function fetchUserData(userId) {
 
     const userData = await response.json()
 
+    console.log(userData)
+
     return userData
   } catch (err) {
     console.error('Error fetching data:', err.message || err)

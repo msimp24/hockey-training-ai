@@ -16,7 +16,6 @@ export function createWorkoutFormHtml(phaseNumber) {
             <option value="strength">Strength</option>
             <option value="power">Power</option>
             <option value="speed">Speed</option>
-            <option value="cardio">Cardio</option>
           </select>
           <p class="error-text" id="focus-err"></p>
         </div>

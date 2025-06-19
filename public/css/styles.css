@@ -940,12 +940,8 @@ th {
 
 .phase-card {
   display: flex;
-  background: var(--primary-light);
-  border-radius: var(--btn-border-radius);
 }
 .phase-card .right-side img {
-  border-top-right-radius: var(--btn-border-radius);
-  border-bottom-right-radius: var(--btn-border-radius);
   width: 100%;
 }
 
@@ -956,6 +952,7 @@ th {
   flex-direction: column;
   gap: 10px;
   justify-content: center;
+  background-color: var(--primary-light);
 }
 
 .phase-card .right-side {
@@ -980,8 +977,6 @@ th {
     max-width: 700px;
   }
   .phase-card .right-side img {
-    border-top-right-radius: 0px;
-    border-bottom-left-radius: var(--btn-border-radius);
   }
 }
 
@@ -1193,6 +1188,66 @@ Token transactions page
   font-size: 16px;
 }
 
+.contact-background {
+  background-color: var(--primary-dark);
+}
+.contact-logo {
+  margin: 0 auto;
+}
+.contact-logo > a {
+  color: var(--primary-light);
+  text-align: center;
+  font-size: var(--font-size-lg);
+}
+.contact-wrapper {
+  background-color: var(--primary-light);
+  padding: 20px;
+  margin: 0 auto;
+  border-radius: var(--btn-border-radius);
+  box-shadow: var(--btn-shadow);
+}
+
+.contact-form {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form input {
+  width: 100%;
+  padding: 4px;
+  font-size: var(--font-size-sm);
+  margin: 5px 0;
+}
+.contact-form textarea {
+  padding: 4px 8px;
+  width: 100%;
+  font-size: var(--font-size-sm);
+  resize: none;
+  height: 250px;
+  margin: 5px 0;
+}
+.contact-form .name-div {
+  display: flex;
+  gap: 10px;
+}
+
+.contact-row {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.contact-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+.info {
+  text-align: center;
+}
+
 @media (width < 768px) {
   .prof-row {
     flex-direction: column;
@@ -1219,6 +1274,15 @@ Token transactions page
 @media (width < 1000px) {
   .video-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .contact-row {
+    flex-direction: column;
+  }
+  .contact-col {
+    width: 100%;
+  }
+  .contact-form .name-div {
+    flex-direction: column;
   }
 }
 

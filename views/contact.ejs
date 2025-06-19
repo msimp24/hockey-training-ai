@@ -1,1 +1,75 @@
-<h1>Contact Us page coming soon</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hockey Training AI</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="icon" type="image/png" href="/images/fav-icon.png" />
+  </head>
+
+  <body class="contact-background">
+    <nav class="nav">
+      <div class="logo contact-logo">
+        <a href="/">🏋️‍♂️HockeyTrainingAI</a>
+      </div>
+    </nav>
+    <div class="container contact-wrapper">
+      <div class="contact-row">
+        <div class="contact-col info">
+          <h1>Contact Us</h1>
+          <p>
+            Feel free to contact us. Send us an email or use the form to get in
+            touch.
+          </p>
+          <h3>✉️ info@hockey-training-ai.com</h3>
+        </div>
+        <div class="contact-col">
+         <form class="contact-form">
+          <div class="name-div">
+           <div>
+            <label for="firstName">First Name</label>
+            <input type="text" id="first-name">
+            <p class="error-text" id="first-name-err"></p>
+           </div>
+           <div>
+            <label for="lastName">Last Name</label>
+            <input type="text" id="last-name">
+            <p class="error-text" id="last-name-err"></p>
+           </div>
+          </div>
+          <div>
+          <label for="email">Email</label>
+            <input type="text" id="email">
+            <p class="error-text" id="email-err"></p>
+
+          </div>
+          <div>
+            <label for="subject">Subject</label>
+              <input type="text" id="subject">
+              <p class="error-text" id="subject-err"></p>
+  
+            </div>
+          <div>
+           <label for="message">Message</label>
+           <textarea name="message" id="message"></textarea>
+           <p class="error-text" id="message-err"></p>
+          </div>
+          <div class="center">
+            <button>Send</button>
+
+          </div>
+         </form>
+        </div>
+      </div>
+    </div>
+  </body>
+  <%- include('partials/footer') %>
+  <script type="module" src="/js/contact.js"></script>
+</html>

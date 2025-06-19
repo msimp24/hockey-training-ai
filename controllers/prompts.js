@@ -33,7 +33,7 @@ const generatePrompt = (userData, phaseFocus, phaseNumber) => {
   else if (phaseFocus === 'power') {
     if (userData.workoutsPerWeek == 3) {
       focusNote =
-        'Provide 1 upper body power day, 1 lower body power day and 1 full body power day. On leg days.'
+        'Provide 1 upper body power day, 1 lower body power day and 1 full body power day. On leg days. Build in plyometrics as supersets with jumps on leg days and trx power exercises on upper body days'
     } else if (userData.workoutsPerWeek == 4) {
       focusNote =
         'Upper body pull day 1, lower body quad dominant day 2, upper body push day 3 and lower body posterior chain day 4. '
@@ -76,6 +76,7 @@ const generatePrompt = (userData, phaseFocus, phaseNumber) => {
 - If "no equipment" is listed, you must not include **any exercise** that requires:
   - Pull-up bars, dip bars, chairs, benches, boxes, bands, water bottles, or any props at all.
   - No "bodyweight rows", "face pulls", or any banded exercises.
+  - Don't include (no equipment in the name of the exercise)
   - Only 100% pure bodyweight exercises done on the floor are allowed (e.g., push-ups, squats, lunges, planks, superman holds, burpees, etc.).
 Example of no equipment upper body:
 1A Pike Push-Ups  

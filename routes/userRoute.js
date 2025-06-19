@@ -14,4 +14,6 @@ router
 //updates user profile
 router.route('/update-names').put(userController.updateUserProfile)
 
+router.route('/contact').post(userController.contactUs)
+
 module.exports = router

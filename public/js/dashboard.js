@@ -322,7 +322,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             workoutForm.notes = notesInput.value
 
             if (isValid) {
-              console.log(workoutForm)
+              //disables elements in the form
+              var nodes = generateWorkoutForm.getElementsByTagName('*')
+              for (var i = 0; i < nodes.length; i++) {
+                nodes[i].disabled = true
+              }
+
               generateWorkout(workoutForm, `${http}workout/generate`)
             }
           })
@@ -445,7 +450,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     let debounceTimeout
 
-    const LIMIT = 9
+    const LIMIT = 10
 
     async function loadTutorials(query = '', page = 1) {
       videoGrid.innerHTML = ''

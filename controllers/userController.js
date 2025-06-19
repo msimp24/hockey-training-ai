@@ -1,4 +1,6 @@
 const db = require('../config/db')
+const { Resend } = require('resend')
+const resend = new Resend(process.env.MAIL_KEY)
 
 const getUserById = (req, res) => {
   const userId = req.params.id
@@ -101,4 +103,102 @@ const updateUserProfile = (req, res) => {
   })
 }
 
-module.exports = { getUserById, getTokenTransactionByUser, updateUserProfile }
+const contactUs = (req, res) => {
+  const { firstName, lastName, email, message, subject } = req.body
+
+  let htmlContent = `
+  <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Contact Form Submission</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        color: #333333;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      }
+      .header {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #2c3e50;
+      }
+      .row {
+        margin-bottom: 15px;
+      }
+      .label {
+        font-weight: bold;
+        color: #555555;
+      }
+      .value {
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">New Contact Form Submission</div>
+      <div class="row">
+        <div class="label">First Name:</div>
+        <div class="value">${firstName}</div>
+      </div>
+      <div class="row">
+        <div class="label">Last Name:</div>
+        <div class="value">${lastName}</div>
+      </div>
+      <div class="row">
+        <div class="label">Email:</div>
+        <div class="value">${email}</div>
+      </div>
+      <div class="row">
+        <div class="label">Subject:</div>
+        <div class="value">${subject}</div>
+      </div>
+      <div class="row">
+        <div class="label">Message:</div>
+        <div class="value">${message}</div>
+      </div>
+    </div>
+  </body>
+</html>
+
+  `
+  resend.emails
+    .send({
+      from: `${firstName} ${lastName} <noreply@${process.env.MAIL_DOMAIN}>`,
+      to: `info@hockey-training-ai.com`,
+      subject: `${subject}`,
+      html: htmlContent,
+    })
+    .then(() => {
+      return res.status(200).json({
+        status: 'Success',
+        message: 'Email received',
+      })
+    })
+    .catch((err) => {
+      console.error('Resend Email Error:', err)
+      return res.status(500).json({
+        status: 'Failed',
+        message: 'Password token failed to send',
+      })
+    })
+}
+
+module.exports = {
+  getUserById,
+  getTokenTransactionByUser,
+  updateUserProfile,
+  contactUs,
+}
