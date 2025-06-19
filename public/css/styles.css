@@ -106,6 +106,9 @@ h2 {
   animation-timeline: view();
   animation-range: entry 0;
 }
+.home-container h2 {
+  color: var(--primary-dark);
+}
 .home-container > .row > .col {
   padding: 20px;
   display: flex;

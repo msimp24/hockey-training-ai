@@ -14,7 +14,6 @@ const generatePrompt = (userData, phaseFocus, phaseNumber) => {
 
   phaseFocus = phaseFocus.toLowerCase()
 
-  console.log(userData.availableEquipment)
   //Additional Changes for the Strength Prompt
 
   if (phaseFocus === 'strength') {

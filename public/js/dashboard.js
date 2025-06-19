@@ -641,7 +641,6 @@ const createProgramSummary = async (userId) => {
               <p class="title">Equipment Requirements:</p>
               <p class="desc">${program.equipmentRequired}</p>
             </div>
-          
 
   `
 
