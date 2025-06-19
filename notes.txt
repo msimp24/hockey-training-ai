@@ -5,7 +5,6 @@ Before launch***
 
 - Change email on profile page
 
-- Remove program name from program summary
 
 - Reiterate ChatGPT to not include exercises if the user does not have the equipment
 
