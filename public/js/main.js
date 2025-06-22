@@ -21,7 +21,7 @@ async function checkStatus() {
     homeRegisterBtn.style.display = 'none'
     homeLoginBtn.style.display = 'none'
 
-    footerLogin.textContent = 'Logout'
+    footerLogin.textContent = 'Log out'
 
     footerLogin.addEventListener('click', logout)
 

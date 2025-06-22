@@ -33,13 +33,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   // left side of profile page
   const profileLogOut = document.querySelector('#profile-logout')
   const profileUser = document.querySelector('#profile-user')
-  const profileEmail = document.querySelector('#profile-email')
 
   const authData = await checkAuth()
 
   const userData = await fetchUserData(authData.userId)
   profileUser.textContent = `Welcome, ${userData.firstName} ${userData.lastName}`
-  profileEmail.textContent = `${userData.email}`
 
   profileLogOut.addEventListener('click', () => {
     logout()
@@ -53,9 +51,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const firstNameErr = document.querySelector('#edit-fname-err')
     const lastNameErr = document.querySelector('#edit-lname-err')
+    const profileEmail = document.querySelector('#edit-profile-email')
+
+    console.log(userData.email)
 
     editFirstName.value = userData.firstName
     editLastName.value = userData.lastName
+    profileEmail.value = userData.email
 
     editWorkoutForm.addEventListener('submit', async (e) => {
       e.preventDefault()
